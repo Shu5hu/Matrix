@@ -45,3 +45,5 @@ openssl x509 -req -days 365 -in /root/capsule_cert/capsule_cert_csr.pem -CA /roo
 katello-certs-check -t capsule -c /root/capsule_cert/capsule.crt -k /root/capsule_cert/capsule_cert_key.pem -b /root/satellite_cert/ca/ca.crt
 [generate install command]
 
+export CAPSULE={{ capsule_fqdn }}
+echo $CAPSULE
