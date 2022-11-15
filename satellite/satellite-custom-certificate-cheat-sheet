@@ -52,10 +52,11 @@ openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/
 Send the certificate signing request to the Certificate Authority. The same Certificate Authority must sign certificates for Satellite Server and Capsule Server.
 Create CA to sign on the certificate in case you do not have CA -
 
-openssl genrsa -out /root/satellite_cert/ca/ca.key 4096
-[create CA key]
 
 mkdir /root/satellite_cert/ca
+
+openssl genrsa -out /root/satellite_cert/ca/ca.key 4096
+[create CA key]
 
 vi /root/satellite_cert/ca/ca.cnf
 [create CA config file]
