@@ -68,7 +68,7 @@ vim /root/satellite_cert/ca.cnf
   x509_extensions     = v3_ca
 
   [ req_distinguished_name ]
-  {{ commonName }}                      = Common Name (eg, your name or your server hostname) ## Print this message
+  commonName         = Common Name (eg, your name or your server hostname) ## Print this message
 
   [ v3_ca ]
   subjectKeyIdentifier = hash
