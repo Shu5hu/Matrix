@@ -1,0 +1,25 @@
+---
+- name: gather facts
+  setup:
+    gather_subset:
+    - 'distribution'
+
+- name: Clean repositories cache
+  shell: "subscription-manager clean && yum clean all"
+
+- name: install katello ca from satellite server
+  yum:
+    name: http://{{ SATELLITE_FQDN }}/pub/katello-ca-consumer-latest.noarch.rpm
+    state: present
+    #sslverify: False
+
+- name: register the server using subscription manager
+  community.general.redhat_subscription:
+    state: present
+    activationkey: "{{ ACTIVATION_KEY }}"
+    org_id: "{{ ORG_ID }}"
+    force_register: True
+  when: ansible_distribution == 'RedHat'
+
+
+
