@@ -20,12 +20,7 @@ vim /root/satellite_cert/openssl.cnf
   prompt = no
 
   [ req_distinguished_name ]
-  C  = Country Name (2 letter code)
-  ST = State or Province Name (full name)
-  L  = Locality Name (eg, city)
-  O  = Organization Name (eg, company)
-  OU = The division of your organization handling the certificate
-  CN = {{ satellite.example.com }}
+  CN = Common Name (eg, your name or your server hostname) ## Print this message
 
   [ v3_req ]
   basicConstraints = CA:FALSE
@@ -68,7 +63,7 @@ vim /root/satellite_cert/ca.cnf
   x509_extensions     = v3_ca
 
   [ req_distinguished_name ]
-  commonName         = Common Name (eg, your name or your server hostname) ## Print this message
+  CN = Common Name (eg, your name or your server hostname) ## Print this message
 
   [ v3_ca ]
   subjectKeyIdentifier = hash
