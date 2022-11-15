@@ -81,14 +81,16 @@ basicConstraints = critical,CA:true
 openssl req -new -x509 -days 3650 -config /root/satellite_cert/ca/ca.cnf -key /root/satellite_cert/ca/ca.key -out /root/satellite_cert/ca/ca.crt
 [create CA certificate]
 
-openssl x509 -req -days 365 -in /root/satellite_cert/satellite_cert_csr.pem -CA /root/satellite_cert/ca/ca.crt -CAkey /root/satellite_cert/ca/ca.key -CAcreateserial -out /root/satellite_cert/satellite.crt -extensions usr_cert -extfile /root/satellite_cert/openssl.cnf
-[sign on the satellite certificate with our new CA]
 
 
 
 
 
 ###
+
+
+openssl x509 -req -days 365 -in /root/satellite_cert/satellite_cert_csr.pem -CA /root/satellite_cert/ca/ca.crt -CAkey /root/satellite_cert/ca/ca.key -CAcreateserial -out /root/satellite_cert/satellite.crt -extensions usr_cert -extfile /root/satellite_cert/openssl.cnf
+[sign on the satellite certificate with our new CA]
 
 katello-certs-check -c /root/satellite_cert/satellite.crt -k /root/satellite_cert/satellite_cert_key.pem -b /root/satellite_cert/ca/ca.crt
 [generate install command]
