@@ -7,41 +7,40 @@ mkdir /root/satellite_cert
 openssl genrsa -out /root/satellite_cert/satellite_cert_key.pem 4096
 [Create praivte key]
 
-vim /root/satellite_cert/openssl.cnf
+vi /root/satellite_cert/openssl.cnf
 [Create config file]
 
 
 {
 
-  [ req ]
-  req_extensions = v3_req
-  distinguished_name = req_distinguished_name
-  x509_extensions = usr_cert
-  prompt = no
+[ req ]
+distinguished_name  = req_distinguished_name
+policy              = policy_anything
+x509_extensions     = usr_cert
+req_extensions      = v3_req
 
-  [ req_distinguished_name ]
-  CN = {{ satellite.example.com }}
+[ req_distinguished_name ]
+commonName                      = Common Name (eg, your name or your server hostname)
 
-  [ v3_req ]
-  basicConstraints = CA:FALSE
-  keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-  extendedKeyUsage = serverAuth, clientAuth, codeSigning, emailProtection
-  subjectAltName = @alt_names
+[ usr_cert ]
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer
+basicConstraints        = CA:FALSE
+extendedKeyUsage        = serverAuth
+keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+subjectAltName          = @alt_names
 
-  [ usr_cert ]
-  basicConstraints=CA:FALSE
-  nsCertType = client, server, email
-  keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-  extendedKeyUsage = serverAuth, clientAuth, codeSigning, emailProtection
-  nsComment = "OpenSSL Generated Certificate"
-  subjectKeyIdentifier=hash
-  authorityKeyIdentifier=keyid,issuer
-  subjectAltName = @alt_names
+[ v3_req ]
+basicConstraints        = CA:FALSE
+extendedKeyUsage        = serverAuth
+keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+subjectAltName          = @alt_names
 
-  [ alt_names ]
-  DNS.1 = {{ satellite.example.com }}
+[ alt_names ]
+DNS.1 = your.server.com
 
 }
+
 
 
 openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/satellite_cert/openssl.cnf -out /root/satellite_cert/satellite_cert_csr.pem
@@ -52,23 +51,23 @@ Create CA to sign on the certificate in case you do not have CA -
 openssl genrsa -out /root/satellite_cert/ca.key 4096
 [create CA key]
 
-vim /root/satellite_cert/ca.cnf
+vi /root/satellite_cert/ca.cnf
 [create CA config file]
 
 {
 
-  [ req ]
-  distinguished_name = req_distinguished_name
-  policy             = policy_anything
-  x509_extensions     = v3_ca
+[ req ]
+distinguished_name = req_distinguished_name
+policy             = policy_anything
+x509_extensions     = v3_ca
 
-  [ req_distinguished_name ]
-  CN = Common Name (eg, your name or your server hostname) ## Print this message
+[ req_distinguished_name ]
+commonName                      = Common Name (eg, your name or your server hostname) ## Print this message
 
-  [ v3_ca ]
-  subjectKeyIdentifier = hash
-  authorityKeyIdentifier = keyid:always,issuer
-  basicConstraints = critical,CA:true
+[ v3_ca ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical,CA:true
 
 }
 
