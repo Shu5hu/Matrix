@@ -11,7 +11,7 @@ subscription-manager repos --disable "*"
 subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
 yum repolist
 dnf module enable satellite:el8
-dnf update -y
+yum update -y
 yum install satellite -y 
 yum install chrony -y
 systemctl start chronyd
