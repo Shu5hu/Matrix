@@ -42,6 +42,6 @@ openssl req -new -key /root/capsule_cert/capsule_cert_key.pem -config /root/caps
 openssl x509 -req -days 365 -in /root/capsule_cert/capsule_cert_csr.pem -CA /root/satellite_cert/ca/ca.crt -CAkey /root/satellite_cert/ca/ca.key -CAcreateserial -out /root/capsule_cert/capsule.crt -extensions usr_cert -extfile /root/capsule_cert/openssl.cnf
 [sign on the satellite certificate with our new CA]
 
-katello-certs-check -c /root/capsule_cert/capsule.crt -k /root/capsule_cert/capsule_cert_key.pem -b /root/satellite_cert/ca/ca.crt
+katello-certs-check -t capsule -c /root/capsule_cert/capsule.crt -k /root/capsule_cert/capsule_cert_key.pem -b /root/satellite_cert/ca/ca.crt
 [generate install command]
 
