@@ -25,7 +25,7 @@ vim /root/satellite_cert/openssl.cnf
   L  = Locality Name (eg, city)
   O  = Organization Name (eg, company)
   OU = The division of your organization handling the certificate
-  CN = satellite.example.com
+  CN = {{ satellite.example.com }}
 
   [ v3_req ]
   basicConstraints = CA:FALSE
@@ -44,7 +44,7 @@ vim /root/satellite_cert/openssl.cnf
   subjectAltName = @alt_names
 
   [ alt_names ]
-  DNS.1 = satellite.example.com
+  DNS.1 = {{ satellite.example.com }}
 
 }
 
@@ -54,7 +54,7 @@ openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/
 
 Create CA to sign on the certificate in case you do not have CA -
 
-openssl genrsa -out ca.key 4096
+openssl genrsa -out /root/satellite_cert/ca.key 4096
 [create CA key]
 
 vim /root/satellite_cert/ca.cnf
@@ -68,7 +68,7 @@ vim /root/satellite_cert/ca.cnf
   x509_extensions     = v3_ca
 
   [ req_distinguished_name ]
-  commonName                      = Common Name (eg, your name or your server hostname) ## Print this message
+  {{ commonName }}                      = Common Name (eg, your name or your server hostname) ## Print this message
 
   [ v3_ca ]
   subjectKeyIdentifier = hash
@@ -77,10 +77,10 @@ vim /root/satellite_cert/ca.cnf
 
 }
 
-openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
+openssl req -new -x509 -days 3650 -config /root/satellite_cert/ca.cnf -key /root/satellite_cert/ca.key -out /root/satellite_cert/ca.crt
 [create CA certificate]
 
-openssl x509 -req -days 365 -in satellite_cert_csr.pem -CA ca.crt -CAkey ca.key -CAcreateserial -out satellite.crt -extensions usr_cert -extfile openssl.cnf
+openssl x509 -req -days 365 -in /root/satellite_cert/satellite_cert_csr.pem -CA /root/satellite_cert/ca.crt -CAkey /root/satellite_cert/ca.key -CAcreateserial -out /root/satellite_cert/satellite.crt -extensions usr_cert -extfile /root/satellite_cert/openssl.cnf
 [sign on the satellite certificate with our new CA]
 
 katello-certs-check -c /root/satellite_cert/satellite_cert.pem -k /root/satellite_cert/satellite_cert_key.pem -b /root/satellite_cert/ca.crt
