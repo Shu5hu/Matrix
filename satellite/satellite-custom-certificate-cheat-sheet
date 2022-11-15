@@ -10,7 +10,6 @@ openssl genrsa -out /root/satellite_cert/satellite_cert_key.pem 4096
 vi /root/satellite_cert/openssl.cnf
 [Create config file]
 
-
 {
 
 [ req ]
@@ -41,7 +40,6 @@ DNS.1 = your.server.com
 
 }
 
-
 openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/satellite_cert/openssl.cnf -out /root/satellite_cert/satellite_cert_csr.pem
 [Generate the Certificate Signing Request]
 
@@ -49,9 +47,9 @@ openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/
 
 
 
+###
 
 Send the certificate signing request to the Certificate Authority. The same Certificate Authority must sign certificates for Satellite Server and Capsule Server.
-|
 Create CA to sign on the certificate in case you do not have CA -
 
 openssl genrsa -out /root/satellite_cert/ca/ca.key 4096
@@ -84,6 +82,12 @@ openssl req -new -x509 -days 3650 -config /root/satellite_cert/ca/ca.cnf -key /r
 
 openssl x509 -req -days 365 -in /root/satellite_cert/satellite_cert_csr.pem -CA /root/satellite_cert/ca/ca.crt -CAkey /root/satellite_cert/ca/ca.key -CAcreateserial -out /root/satellite_cert/satellite.crt -extensions usr_cert -extfile /root/satellite_cert/openssl.cnf
 [sign on the satellite certificate with our new CA]
+
+
+
+
+
+###
 
 katello-certs-check -c /root/satellite_cert/satellite.crt -k /root/satellite_cert/satellite_cert_key.pem -b /root/satellite_cert/ca/ca.crt
 [generate install command]
