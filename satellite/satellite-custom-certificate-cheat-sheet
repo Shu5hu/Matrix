@@ -20,7 +20,7 @@ vim /root/satellite_cert/openssl.cnf
   prompt = no
 
   [ req_distinguished_name ]
-  CN = Common Name (eg, your name or your server hostname) ## Print this message
+  CN = {{ satellite.example.com }}
 
   [ v3_req ]
   basicConstraints = CA:FALSE
