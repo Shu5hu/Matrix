@@ -1,0 +1,10 @@
+- name: "Execute command in shell"
+  shell: "{{ item }}"
+  register: command_output
+  loop: "{{ command.split(';') }}"
+
+- debug:
+    msg: {{ item.stdout }}
+  loop: "{{ command_output.results }}"
+  loop_control:
+    label: "{{ item.stdout }}"
