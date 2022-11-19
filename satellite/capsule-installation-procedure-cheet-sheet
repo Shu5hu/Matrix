@@ -1,0 +1,75 @@
+
+
+firewall-cmd --add-port="5646/tcp"
+firewall-cmd --runtime-to-permanent
+
+firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-port="8140/tcp" --add-port="8443/tcp" --add-port="8000/tcp" --add-port="9090/tcp"
+firewall-cmd --runtime-to-permanent
+firewall-cmd --list-all
+
+
+In the Satellite web UI, navigate to Hosts > Register Host.
+Click Generate to create the registration command.
+Click on the files icon to copy the command to your clipboard.
+Log on to the host you want register and run the previously generated command.
+Update subscription manager configuration for rhsm.baseurl and server.hostname:
+
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://{{ satellite_fqdn }}/pub/katello-ca-consumer-latest.noarch.rpm
+yum localinstall -y katello-ca-consumer-latest.noarch.rpm
+subscription-manager config --rhsm.baseurl=https://{{ satellite_fqdn }}/pulp/content --server.hostname={{ satellite_fqdn }}
+
+[!]Check the /etc/yum.repos.d/redhat.repo file and ensure that the appropriate repositories have been enabled.
+
+subscription-manager repos --disable "*"
+subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-capsule-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
+dnf module enable satellite-capsule:el8
+yum update -y
+yum install satellite-capsule -y
+yum install chrony -y
+systemctl start chronyd
+systemctl enable chronyd
+
+###
+
+steps on the satellite server -
+
+[!] execute procedure - capsule-custom-certificate-cheet-sheet
+
+export CAPSULE={{ capsule_fqdn }}
+echo $CAPSULE
+
+[!] examples:
+
+capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
+                                   --certs-tar  "~/$CAPSULE-certs.tar" \
+                                   --server-cert "/root/capsule_cert/capsule.crt" \
+                                   --server-key "/root/capsule_cert/capsule_cert_key.pem" \
+                                   --server-ca-cert "/root/satellite_cert/ca/ca.crt"
+								 
+
+
+  To finish the installation, follow these steps:
+
+  If you do not have the Capsule registered to the Satellite instance, then please do the following:
+
+  1. yum -y localinstall http://satellite01.redhat.local/pub/katello-ca-consumer-latest.noarch.rpm
+  2. subscription-manager register --org "Matrix"
+
+  Once this is completed run the steps below to start the Capsule installation:
+
+  1. Ensure that the satellite-capsule package is installed on the system.
+  2. Copy the following file /root/capsule01.redhat.local-certs.tar to the system capsule01.redhat.local at the following location /root/capsule01.redhat.local-certs.tar
+  scp /root/capsule01.redhat.local-certs.tar root@capsule01.redhat.local:/root/capsule01.redhat.local-certs.tar
+  3. Run the following commands on the Capsule (possibly with the customized
+     parameters, see satellite-installer --scenario capsule --help and
+     documentation for more info on setting up additional services):
+
+  satellite-installer \
+                    --scenario capsule \
+                    --certs-tar-file                              "/root/capsule01.redhat.local-certs.tar"\
+                    --foreman-proxy-register-in-foreman           "true"\
+                    --foreman-proxy-foreman-base-url              "https://satellite01.redhat.local"\
+                    --foreman-proxy-trusted-hosts                 "satellite01.redhat.local"\
+                    --foreman-proxy-trusted-hosts                 "capsule01.redhat.local"\
+                    --foreman-proxy-oauth-consumer-key            "eEdQtvXmNKgEVL8vvfDTyMAFH2BFiDtA"\
+                    --foreman-proxy-oauth-consumer-secret         "htVdXYthUoKvTRScJ92xdUXdTRvnx7rp"
