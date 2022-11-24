@@ -4,7 +4,7 @@
   loop: "{{ command.split(';') }}"
 
 - debug:
-    msg: {{ item.stdout }}
+    msg: "{{ item.stdout }}"
   loop: "{{ command_output.results }}"
   loop_control:
     label: "{{ item.stdout }}"
