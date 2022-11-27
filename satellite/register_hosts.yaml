@@ -1,4 +1,3 @@
----
 - name: gather facts
   setup:
     gather_subset:
@@ -14,7 +13,7 @@
     #sslverify: False
 
 - name: register the server using subscription manager
-  community.general.redhat_subscription:
+  redhat_subscription:
     state: present
     activationkey: "{{ ACTIVATION_KEY }}"
     org_id: "{{ ORG_ID }}"
