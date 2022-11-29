@@ -73,3 +73,7 @@ capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
                     --foreman-proxy-trusted-hosts                 "capsule01.redhat.local"\
                     --foreman-proxy-oauth-consumer-key            "eEdQtvXmNKgEVL8vvfDTyMAFH2BFiDtA"\
                     --foreman-proxy-oauth-consumer-secret         "htVdXYthUoKvTRScJ92xdUXdTRvnx7rp"
+		    
+		   
+Content sync log - /var/log/httpd/forman-ssl_access_ssl.log		   
+
