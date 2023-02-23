@@ -18,21 +18,21 @@
 
 create tls key
 
-`$ openssl genrsa -out tls.key 2048`
+```$ openssl genrsa -out tls.key 2048
 
 create request for the CA
 
   * *CN must match the DNS name of the route which is <EXAMPLE=(route name)-(prohect name).apps-crc.testing>*
 
-`$ openssl req -new -key tls.key -out tls.csr`
+$ openssl req -new -key tls.key -out tls.csr```
 
 #### Self-signing the certificate -
 
 create the certificate signing by the CA
 
-`$ openssl x509 -req -in tls.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out tls.crt -days 1650 -sha256`
+```$ openssl x509 -req -in tls.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out tls.crt -days 1650 -sha256
 
 check certificate information
 
-`$ openssl x509 -in <cert file> -text -noout`
+$ openssl x509 -in <cert file> -text -noout```
 
