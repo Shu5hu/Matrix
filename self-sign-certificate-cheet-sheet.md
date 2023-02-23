@@ -6,13 +6,13 @@
 
  create directory for the certificate proccess
  
- `$ mkdir ~/openssl`
+ ```$ mkdir ~/openssl
 
- `$ cd ~/openssl`
+ $ cd ~/openssl
  
  generate CA certs to sign the route certificate
  
- `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
+ $ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem```
  
 #### Creating the certificate -
 
@@ -25,8 +25,6 @@ create request for the CA
   * *CN must match the DNS name of the route which is <EXAMPLE=(route name)-(prohect name).apps-crc.testing>*
 
 `$ openssl req -new -key tls.key -out tls.csr`
-
-
 
 #### Self-signing the certificate -
 
