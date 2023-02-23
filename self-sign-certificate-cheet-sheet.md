@@ -1,19 +1,16 @@
-#### Self-sign certificate proccess -
+### Self-sign certificate proccess -
 
 ##### Creating CA -
 
 > `$ mkdir ~/openssl`
 >
 > `$ cd ~/openssl`
-
-
-create directory for the certificate proccess
-
-openssl genrsa -des3 -out myCA.key 2048
-[create CA key]
-
-openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem
-[generate CA certs to sign the route certificate]
+> 
+> create directory for the certificate proccess
+> 
+> `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
+> 
+> generate CA certs to sign the route certificate
 
 Creating the certificate -
 
