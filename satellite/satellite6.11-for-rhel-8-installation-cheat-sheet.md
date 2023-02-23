@@ -10,6 +10,7 @@ firewall-cmd --runtime-to-permanent
 firewall-cmd --list-all
 ```
 ---
+##### prerequisites - 
 ```
 ping -c1 $(hostname -f)
 ```
@@ -61,16 +62,16 @@ tmux
 > ```
 > cntrl + b + <-
 ---
-###### Install Satellite server -
+##### Install Satellite server -
 ```
 satellite-installer --scenario satellite --foreman-initial-organization *<My_Organization>* --foreman-initial-location *<My_Location>* --foreman-initial-admin-username *<admin_user_name>* --foreman-initial-admin-password *<admin_password>*
 ```
 ---
-###### Import manifest -
+##### Import manifest -
 ```
 hammer subscription upload --file ~/*<manifest_file.zip>* --organization *<My_Organization>*
 ```
-###### Register hosts -
+##### Register hosts -
 ```
 curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://*<satellite_fqdn>*/pub/katello-ca-consumer-latest.noarch.rpm
 ```
@@ -95,10 +96,11 @@ foreman-maintain packages install *<package name>*
 satellite-maintain packages unlock
 ```
 ---
-###### Configuring Satellite Server with an HTTP Proxy -
+##### Configuring Satellite Server with an HTTP Proxy -
 ```
-hammer http-proxy create --name=*<myproxy>* --url http://*<myproxy.example.com:8080>* {{ OPTIONAL: (--username=*<proxy_username>* --password=*<proxy_password>*) }}
+hammer http-proxy create --name=*<myproxy>* --url http://*<myproxy.example.com:8080>*
 ```
+* *{{ OPTIONAL: (--username=*<proxy_username>* --password=*<proxy_password>*) }}*
 ```
 hammer settings set --name=content_default_http_proxy --value=*<my_proxy>*
 ```
