@@ -2,7 +2,7 @@
 
 ---
 
-##### Creating CA -
+#### Creating CA -
 
  create directory for the certificate proccess
  
@@ -14,7 +14,7 @@
  
  `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
  
-##### Creating the certificate -
+#### Creating the certificate -
 
 create tls key
 
@@ -22,13 +22,13 @@ create tls key
 
 create request for the CA
 
-  * CN must match the DNS name of the route which is [EXAMPLE=(route name)-(prohect name).apps-crc.testing]
+>  * CN must match the DNS name of the route which is [EXAMPLE=(route name)-(prohect name).apps-crc.testing]
 
 `$ openssl req -new -key tls.key -out tls.csr`
 
 
 
-##### Self-signing the certificate -
+#### Self-signing the certificate -
 
 create the certificate signing by the CA
 
