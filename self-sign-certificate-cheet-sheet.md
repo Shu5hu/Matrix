@@ -1,4 +1,4 @@
-### Self-sign certificate proccess -
+## Self-sign certificate proccess -
 
 ##### Creating CA -
 
@@ -12,9 +12,10 @@
 > 
 > generate CA certs to sign the route certificate
 
-Creating the certificate -
+##### Creating the certificate -
 
-openssl genrsa -out tls.key 2048
+- [x] $ `openssl genrsa -out tls.key 2048`
+
 [create tls key]
 
 openssl req -new -key tls.key -out tls.csr
