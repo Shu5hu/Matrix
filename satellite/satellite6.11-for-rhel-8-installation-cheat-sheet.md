@@ -1,9 +1,9 @@
 
-firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-port="8000/tcp" --add-port="9090/tcp" --add-port="8140/tcp"
-firewall-cmd --runtime-to-permanent
-firewall-cmd --list-all
+`firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-port="8000/tcp" --add-port="9090/tcp" --add-port="8140/tcp"`
+`firewall-cmd --runtime-to-permanent`
+`firewall-cmd --list-all`
 
-ping -c1 `hostname -f`
+`ping -c1 `hostname -f``
 subscription-manager register
 subscription-manager list --all --available --matches 'Red Hat Satellite'
 subscription-manager attach --pool=pool_id
