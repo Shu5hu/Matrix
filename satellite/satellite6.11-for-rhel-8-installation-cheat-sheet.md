@@ -1,5 +1,4 @@
-/
-/
+___
 ###### *In case you use firewalld*
 ```
 firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-
@@ -57,7 +56,7 @@ yum install chrony sos createrepo_c tmux -y
 ```
 systemctl enable --now chronyd
 ```
----
+___
 ###### *In case you use tmux*
 ```
 tmux
@@ -78,12 +77,12 @@ tmux
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
+
+&nbsp;
+
+&nbsp;
+
 ---
-
-&nbsp;
-
-&nbsp;
-
 ##### Import manifest -
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
