@@ -98,7 +98,7 @@ hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080
 ```
 hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
----
+#
 ###### Satellite-maintain commands - 
 ```
 satellite-maintain service status
@@ -115,6 +115,5 @@ foreman-maintain packages install <package name>
 ```
 satellite-maintain packages unlock
 ```
----
 
 
