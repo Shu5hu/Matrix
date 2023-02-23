@@ -62,7 +62,7 @@ systemctl enable --now chronyd
 ```
 tmux
 ```
-> *cntrl + b + %8
+> *cntrl + b + %*
 > 
 > *cntrl +b + ->*
 > ```
