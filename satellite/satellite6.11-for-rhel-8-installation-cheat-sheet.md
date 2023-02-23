@@ -11,6 +11,9 @@ firewall-cmd --list-all
 ```
 ---
 
+
+
+
 ### prerequisites - 
 ```
 ping -c1 $(hostname -f)
