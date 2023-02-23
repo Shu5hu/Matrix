@@ -10,8 +10,8 @@ firewall-cmd --runtime-to-permanent
 firewall-cmd --list-all
 ```
 ---
-\
-\
+&nbsp;
+&nbsp;
 ### prerequisites - 
 ```
 ping -c1 $(hostname -f)
@@ -63,14 +63,16 @@ tmux
 > tail -f /var/log/foreman-installer/satellite.log
 > ```
 > cntrl + b + <-
+&nbsp;
+&nbsp;
 ---
-\
-\
 ### Install Satellite server -
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
 ---
+&nbsp;
+&nbsp;
 ##### Import manifest -
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
