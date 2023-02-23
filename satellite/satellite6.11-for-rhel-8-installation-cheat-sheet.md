@@ -15,8 +15,12 @@ firewall-cmd --list-all
 
 &nbsp;
 
----
+
 ### prerequisites - 
+#
+
+&nbsp;
+
 ```
 ping -c1 $(hostname -f)
 ```
