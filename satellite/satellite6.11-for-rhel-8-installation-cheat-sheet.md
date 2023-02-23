@@ -79,7 +79,7 @@ yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 ```
 hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
 ```
-* *{{ OPTIONAL: (--username=<proxy_username> --password=<proxy_password>) }}*
+* *OPTIONAL: --username=<proxy_username> --password=<proxy_password>*
 ```
 hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
