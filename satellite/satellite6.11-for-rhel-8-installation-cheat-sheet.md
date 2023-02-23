@@ -21,7 +21,7 @@ subscription-manager register
 subscription-manager list --all --available --matches 'Red Hat Satellite'
 ```
 ```
-subscription-manager attach --pool=*<pool_id>*
+subscription-manager attach --pool=<pool_id>
 ```
 ```
 subscription-manager list --consumed
@@ -64,16 +64,16 @@ tmux
 ---
 ##### Install Satellite server -
 ```
-satellite-installer --scenario satellite --foreman-initial-organization *<My_Organization>* --foreman-initial-location *<My_Location>* --foreman-initial-admin-username *<admin_user_name>* --foreman-initial-admin-password *<admin_password>*
+satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
 ---
 ##### Import manifest -
 ```
-hammer subscription upload --file ~/*<manifest_file.zip>* --organization *<My_Organization>*
+hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
 ```
 ##### Register hosts -
 ```
-curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://*<satellite_fqdn>*/pub/katello-ca-consumer-latest.noarch.rpm
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<satellite_fqdn>/pub/katello-ca-consumer-latest.noarch.rpm
 ```
 ```
 yum localinstall -y katello-ca-consumer-latest.noarch.rpm
@@ -90,7 +90,7 @@ hammer ping
 satellite-maintain service restart
 ```
 ```
-foreman-maintain packages install *<package name>*
+foreman-maintain packages install <package name>
 ```
 ```
 satellite-maintain packages unlock
@@ -98,10 +98,10 @@ satellite-maintain packages unlock
 ---
 ##### Configuring Satellite Server with an HTTP Proxy -
 ```
-hammer http-proxy create --name=*<myproxy>* --url http://*<myproxy.example.com:8080>*
+hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
 ```
-* *{{ OPTIONAL: (--username=*<proxy_username>* --password=*<proxy_password>*) }}*
+* *{{ OPTIONAL: (--username=<proxy_username> --password=<proxy_password>) }}*
 ```
-hammer settings set --name=content_default_http_proxy --value=*<my_proxy>*
+hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
 
