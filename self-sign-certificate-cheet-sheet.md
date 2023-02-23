@@ -2,15 +2,15 @@
 
 ##### Creating CA -
 
-> `$ mkdir ~/openssl`
->
-> `$ cd ~/openssl`
-> 
-> create directory for the certificate proccess
-> 
-> `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
-> 
-> generate CA certs to sign the route certificate
+ `$ mkdir ~/openssl
+
+ $ cd ~/openssl`
+ 
+ create directory for the certificate proccess
+ 
+ `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
+ 
+ generate CA certs to sign the route certificate
 
 ##### Creating the certificate -
 
