@@ -1,4 +1,3 @@
----
 ###### *In case you use firewalld*
 ```
 firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-
@@ -61,6 +60,8 @@ tmux
 > tail -f /var/log/foreman-installer/satellite.log
 > ```
 > cntrl + b + <-
+---
+###### Install Satellite server -
 ```
 satellite-installer --scenario satellite --foreman-initial-organization *<My_Organization>* --foreman-initial-location *<My_Location>* --foreman-initial-admin-username *<admin_user_name>* --foreman-initial-admin-password *<admin_password>*
 ```
@@ -78,23 +79,27 @@ yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 ```
 ---
 ###### Satellite-maintain commands - 
-> ```
-> satellite-maintain service status
-> ```
-> ```
-> hammer ping
-> ```
-> ```
-> satellite-maintain service restart
-> ```
-> ```
-> foreman-maintain packages install *<package name>*
-> ```
-> ```
-> satellite-maintain packages unlock
-> ```
+```
+satellite-maintain service status
+```
+```
+hammer ping
+```
+```
+satellite-maintain service restart
+```
+```
+foreman-maintain packages install *<package name>*
+```
+```
+satellite-maintain packages unlock
+```
 ---
-##### Configuring Satellite Server with an HTTP Proxy -
-hammer http-proxy create --name=myproxy --url http://myproxy.example.com:8080 {{ OPTIONAL: (--username=proxy_username --password=proxy_password) }}
-hammer settings set --name=content_default_http_proxy --value=myproxy
+###### Configuring Satellite Server with an HTTP Proxy -
+```
+hammer http-proxy create --name=*<myproxy>* --url http://*<myproxy.example.com:8080>* {{ OPTIONAL: (--username=*<proxy_username>* --password=*<proxy_password>*) }}
+```
+```
+hammer settings set --name=content_default_http_proxy --value=*<my_proxy>*
+```
 
