@@ -10,6 +10,7 @@ firewall-cmd --runtime-to-permanent
 firewall-cmd --list-all
 ```
 ---
+
 ### prerequisites - 
 ```
 ping -c1 $(hostname -f)
@@ -50,6 +51,7 @@ yum install chrony sos createrepo_c tmux -y
 ```
 systemctl enable --now chronyd
 ```
+
 ---
 ###### *In case you use tmux*
 ```
@@ -62,10 +64,12 @@ tmux
 > ```
 > cntrl + b + <-
 ---
+
 ### Install Satellite server -
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
+
 ---
 ##### Import manifest -
 ```
@@ -77,6 +81,14 @@ curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<satellit
 ```
 ```
 yum localinstall -y katello-ca-consumer-latest.noarch.rpm
+```
+##### Configuring Satellite Server with an HTTP Proxy -
+```
+hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
+```
+* *{{ OPTIONAL: (--username=<proxy_username> --password=<proxy_password>) }}*
+```
+hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
 ---
 ###### Satellite-maintain commands - 
@@ -96,12 +108,5 @@ foreman-maintain packages install <package name>
 satellite-maintain packages unlock
 ```
 ---
-##### Configuring Satellite Server with an HTTP Proxy -
-```
-hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
-```
-* *{{ OPTIONAL: (--username=<proxy_username> --password=<proxy_password>) }}*
-```
-hammer settings set --name=content_default_http_proxy --value=<my_proxy>
-```
+
 
