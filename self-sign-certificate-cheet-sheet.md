@@ -1,9 +1,13 @@
-Self-sign certificate proccess -
+# Self-sign certificate proccess -
 
-Creating CA -
+## Creating CA -
 
 `$ mkdir ~/openssl`
+
+
 `$ cd ~/openssl`
+
+
 [create directory for the certificate proccess]
 
 openssl genrsa -des3 -out myCA.key 2048
