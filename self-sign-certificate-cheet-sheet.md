@@ -14,6 +14,7 @@
  
  $ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem```
  
+ 
 #### Creating the certificate -
 
 create tls key
