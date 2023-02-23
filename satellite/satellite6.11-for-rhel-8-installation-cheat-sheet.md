@@ -1,5 +1,3 @@
-# Satellite 6.11 for rhel8 installation - CheatSheet
-
 &nbsp;
 
 ### prerequisites - 
