@@ -78,6 +78,11 @@ tmux
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
+
+&nbsp;
+
+&nbsp;
+
 #
 ##### Import manifest -
 ```
