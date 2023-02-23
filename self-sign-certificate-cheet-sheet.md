@@ -2,7 +2,7 @@ Self-sign certificate proccess -
 
 Creating CA -
 
-`$ mkdir ~/openssl`
+`$ mkdir ~/openssl\n`
 `$ cd ~/openssl`
 #[create directory for the certificate proccess]
 
