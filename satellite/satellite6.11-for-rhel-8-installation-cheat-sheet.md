@@ -62,13 +62,13 @@ systemctl enable --now chronyd
 ```
 tmux
 ```
-> cntrl + b + %
+> *cntrl + b + %8
 > 
-> cntrl +b + ->
+> *cntrl +b + ->*
 > ```
 > tail -f /var/log/foreman-installer/satellite.log
 > ```
-> cntrl + b + <-
+> *cntrl + b + <-*
 
 &nbsp;
 
