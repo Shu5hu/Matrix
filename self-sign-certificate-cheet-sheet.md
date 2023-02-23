@@ -22,7 +22,7 @@ create tls key
 
 create request for the CA
 
->  * CN must match the DNS name of the route which is [EXAMPLE=(route name)-(prohect name).apps-crc.testing]
+  * *CN must match the DNS name of the route which is <EXAMPLE=(route name)-(prohect name).apps-crc.testing>*
 
 `$ openssl req -new -key tls.key -out tls.csr`
 
