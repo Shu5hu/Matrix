@@ -1,20 +1,7 @@
+# Satellite 6.11 for rhel8 installation - CheatSheet
 #
-###### *In case you use firewalld*
-```
-firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-
-port="8000/tcp" --add-port="9090/tcp" --add-port="8140/tcp"
-```
-```
-firewall-cmd --runtime-to-permanent
-```
-```
-firewall-cmd --list-all
-```
 
 &nbsp;
-
-&nbsp;
-
 
 ### prerequisites - 
 #
