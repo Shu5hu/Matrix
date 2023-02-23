@@ -66,13 +66,6 @@ satellite-installer --scenario satellite --foreman-initial-organization <My_Orga
 
 &nbsp;
 
-&nbsp;
-
-##
-
-&nbsp;
-
-
 ##### Import manifest -
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
