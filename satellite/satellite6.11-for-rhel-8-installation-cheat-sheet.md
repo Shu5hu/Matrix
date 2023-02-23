@@ -1,3 +1,4 @@
+//
 ###### *In case you use firewalld*
 ```
 firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-
@@ -15,6 +16,7 @@ firewall-cmd --list-all
 
 &nbsp;
 
+---
 ### prerequisites - 
 ```
 ping -c1 $(hostname -f)
@@ -81,6 +83,8 @@ satellite-installer --scenario satellite --foreman-initial-organization <My_Orga
 &nbsp;
 
 &nbsp;
+
+//
 
 ##### Import manifest -
 ```
