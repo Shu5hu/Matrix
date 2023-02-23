@@ -14,12 +14,8 @@ yum repolist
 dnf module enable satellite:el8
 yum update -y
 yum install satellite -y 
-yum install chrony -y
-systemctl start chronyd
-systemctl enable chronyd
-yum install sos -y
-yum install createrepo_c -y
-yum install tmux -y
+yum install chrony sos createrepo_c tmux -y
+systemctl enable --now chronyd
 tmux
 cntrl + b + %
 cntrl +b + ->
