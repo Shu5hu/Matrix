@@ -1,31 +1,38 @@
-## Self-sign certificate proccess -
+### Self-sign certificate proccess -
 
 ##### Creating CA -
 
- `$ mkdir ~/openssl
-
- $ cd ~/openssl`
- 
  create directory for the certificate proccess
+ 
+ `$ mkdir ~/openssl`
+
+ `$ cd ~/openssl`
+ 
+ generate CA certs to sign the route certificate
  
  `$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem`
  
- generate CA certs to sign the route certificate
-
 ##### Creating the certificate -
 
-- [x] $ `openssl genrsa -out tls.key 2048`
+create tls key
 
-[create tls key]
+`$ openssl genrsa -out tls.key 2048`
 
-openssl req -new -key tls.key -out tls.csr
-[create request for the CA]
-* CN must match the DNS name of the route which is [EXAMPLE=(route name)-(prohect name).apps-crc.testing]
+create request for the CA
 
-Self-signing the certificate -
+  * CN must match the DNS name of the route which is [EXAMPLE=(route name)-(prohect name).apps-crc.testing]
 
-openssl x509 -req -in tls.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out tls.crt -days 1650 -sha256
-[create the certificate signing by the CA]
+`$ openssl req -new -key tls.key -out tls.csr`
 
-openssl x509 -in [cert file] -text -noout
-[check certificate information]
+
+
+##### Self-signing the certificate -
+
+create the certificate signing by the CA
+
+`$ openssl x509 -req -in tls.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out tls.crt -days 1650 -sha256`
+
+check certificate information
+
+`$ openssl x509 -in <cert file> -text -noout`
+
