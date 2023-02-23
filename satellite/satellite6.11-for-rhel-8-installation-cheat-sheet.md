@@ -18,9 +18,6 @@ firewall-cmd --list-all
 
 ### prerequisites - 
 #
-
-&nbsp;
-
 ```
 ping -c1 $(hostname -f)
 ```
@@ -60,7 +57,7 @@ yum install chrony sos createrepo_c tmux -y
 ```
 systemctl enable --now chronyd
 ```
-___
+#
 ###### *In case you use tmux*
 ```
 tmux
@@ -81,12 +78,7 @@ tmux
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
-
-&nbsp;
-
-&nbsp;
-
----
+#
 ##### Import manifest -
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
