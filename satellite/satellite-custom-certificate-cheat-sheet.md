@@ -1,6 +1,6 @@
-### Create server certificate -
-
 #
+
+### Create server certificate -
 
 *Check Apache used certififcate to see that is a self sign*
 
@@ -95,6 +95,11 @@ openssl x509 -req -days 365 -in /root/satellite_cert/satellite_cert_csr.pem -CA 
 ```
 openssl req -text -noout -verify -in /root/satellite_cert/satellite_cert_csr.pem
 ```
+
+#
+
+### Generate the certificate install command -
+
 ```
 katello-certs-check -c /root/satellite_cert/satellite.crt -k /root/satellite_cert/satellite_cert_key.pem -b /root/satellite_cert/ca/ca.crt
 ```
