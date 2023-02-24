@@ -2,7 +2,7 @@
 
 ### Create server certificate -
 
-*Check Apache used certififcate to see that is a self sign*
+* *Check Apache used certififcate to see that is a self sign*
 
 ```
 openssl x509 -in /etc/pki/katello/certs/katello-apache.crt -text |egrep '(Issuer:|Subject:|CA:|DNS:|Digital|Not Before|Not After)'
@@ -49,7 +49,7 @@ vi /root/satellite_cert/openssl.cnf
 openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/satellite_cert/openssl.cnf -out /root/satellite_cert/satellite_cert_csr.pem
 ```
 
-*Send the certificate signing request to the Certificate Authority. The same Certificate Authority must sign certificates for Satellite Server and Capsule Server.*
+* *Send the certificate signing request to the Certificate Authority. The same Certificate Authority must sign certificates for Satellite Server and Capsule Server.*
 
 #
 
