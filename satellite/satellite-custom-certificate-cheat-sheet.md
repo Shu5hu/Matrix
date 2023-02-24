@@ -18,31 +18,31 @@ vi /root/satellite_cert/openssl.cnf
 ```
 
 >```
-> [ req ] </br>
-> distinguished_name  = req_distinguished_name </br>
-> policy              = policy_anything </br>
-> x509_extensions     = usr_cert </br>
-> req_extensions      = v3_req </br>
-> </br>
-> [ req_distinguished_name ] </br>
-> commonName                      = Common Name (eg, your name or your server hostname) </br>
-> </br>
-> [ usr_cert ] </br>
-> subjectKeyIdentifier    = hash </br>
-> authorityKeyIdentifier  = keyid,issuer </br>
-> basicConstraints        = CA:FALSE </br>
-> extendedKeyUsage        = serverAuth </br>
-> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment </br>
-> subjectAltName          = @alt_names </br>
-> </br>
-> [ v3_req ] </br>
-> basicConstraints        = CA:FALSE </bt>
-> extendedKeyUsage        = serverAuth </br>
-> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment </br>
-> subjectAltName          = @alt_names </br>
-> </br>
-> [ alt_names ] </br>
-> DNS.1 = your.server.com </br>
+> [ req ]
+> distinguished_name  = req_distinguished_name
+> policy              = policy_anything 
+> x509_extensions     = usr_cert 
+> req_extensions      = v3_req 
+> 
+> [ req_distinguished_name ] 
+> commonName                      = Common Name (eg, your name or your server hostname) 
+> 
+> [ usr_cert ] 
+> subjectKeyIdentifier    = hash
+> authorityKeyIdentifier  = keyid,issuer
+> basicConstraints        = CA:FALSE
+> extendedKeyUsage        = serverAuth
+> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+> subjectAltName          = @alt_names
+> 
+> [ v3_req ]
+> basicConstraints        = CA:FALSE
+> extendedKeyUsage        = serverAuth
+> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+> subjectAltName          = @alt_names
+> 
+> [ alt_names ]
+> DNS.1 = your.server.com
 > ```
 
 ```
@@ -66,18 +66,18 @@ vi /root/satellite_cert/ca/ca.cnf
 ```
 
 >```
-> [ req ] </br>
-> distinguished_name = req_distinguished_name </br>
-> policy             = policy_anything </br>
-> x509_extensions     = v3_ca </br>
-> </br>
-> [ req_distinguished_name ] </br>
-> commonName                      = Common Name (eg, your name or your server hostname) ## Print this message </br>
-> </br>
-> [ v3_ca ] </br>
-> subjectKeyIdentifier = hash </br>
-> authorityKeyIdentifier = keyid:always,issuer </br>
-> basicConstraints = critical,CA:true </br>
+> [ req ]
+> distinguished_name = req_distinguished_name
+> policy             = policy_anything
+> x509_extensions     = v3_ca
+> 
+> [ req_distinguished_name ]
+> commonName                      = Common Name (eg, your name or your server hostname) ## Print this message
+>
+> [ v3_ca ]
+> subjectKeyIdentifier = hash
+> authorityKeyIdentifier = keyid:always,issuer
+> basicConstraints = critical,CA:true
 > ```
 
 ```
