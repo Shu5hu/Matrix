@@ -24,7 +24,7 @@ openssl genrsa -out /root/satellite_cert/satellite_cert_key.pem 4096
 vi /root/satellite_cert/openssl.cnf
 ```
 
-> [ req ] </br>
+> <span style="font-family:Papyrus; font-size:4em;">[ req ] </br>
 > distinguished_name  = req_distinguished_name </br>
 > policy              = policy_anything </br>
 > x509_extensions     = usr_cert </br>
@@ -48,7 +48,7 @@ vi /root/satellite_cert/openssl.cnf
 > subjectAltName          = @alt_names </br>
 > </br>
 > [ alt_names ] </br>
-> DNS.1 = your.server.com </br>
+> DNS.1 = your.server.com </br></span> 
 #
 *Generate the Certificate Signing Request -*
 
