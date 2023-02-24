@@ -1,5 +1,7 @@
-### prerequisites - 
 #
+
+### prerequisites - 
+
 ```
 ping -c1 $(hostname -f)
 ```
@@ -39,11 +41,15 @@ yum install chrony sos createrepo_c tmux -y
 ```
 systemctl enable --now chronyd
 ```
+
 #
+
 ###### *In case you use tmux*
+
 ```
 tmux
 ```
+
 > *cntrl + b + %*
 > 
 > *cntrl +b + ->*
@@ -54,28 +60,33 @@ tmux
 
 &nbsp;
 
-&nbsp;
-
-
 ## Install Satellite server -
+
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
 
 &nbsp;
 
+#
+
 ##### Import manifest -
+
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
 ```
+
 ##### Register hosts -
+
 ```
 curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<satellite_fqdn>/pub/katello-ca-consumer-latest.noarch.rpm
 ```
 ```
 yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 ```
+
 ##### Configuring Satellite Server with an HTTP Proxy -
+
 ```
 hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
 ```
@@ -83,8 +94,11 @@ hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080
 ```
 hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
+
 #
+
 ##### Satellite-maintain commands - 
+
 ```
 satellite-maintain service status
 ```
