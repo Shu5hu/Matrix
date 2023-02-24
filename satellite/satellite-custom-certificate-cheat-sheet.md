@@ -1,24 +1,24 @@
 #
 
-Check Apache used certififcate to see that is a self sign
+*Check Apache used certififcate to see that is a self sign*
 
 ```
 openssl x509 -in /etc/pki/katello/certs/katello-apache.crt -text |egrep '(Issuer:|Subject:|CA:|DNS:|Digital|Not Before|Not After)'
 ```
 
-Create directory for the satellite server certificates
+*Create directory for the satellite server certificates - *
 
 ```
 mkdir /root/satellite_cert
 ```
 
-Create praivte key
+*Create praivte key - *
 
 ```
 openssl genrsa -out /root/satellite_cert/satellite_cert_key.pem 4096
 ```
 
-Create config file
+*Create config file - *
 
 ```
 vi /root/satellite_cert/openssl.cnf
@@ -49,8 +49,8 @@ vi /root/satellite_cert/openssl.cnf
 > </br>
 > [ alt_names ] </br>
 > DNS.1 = your.server.com </br>
-
-Generate the Certificate Signing Request
+#
+*Generate the Certificate Signing Request - *
 
 ```
 openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/satellite_cert/openssl.cnf -out /root/satellite_cert/satellite_cert_csr.pem
