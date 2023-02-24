@@ -24,11 +24,11 @@ Create config file
 vi /root/satellite_cert/openssl.cnf
 ```
 
-> [ req ]
-> distinguished_name  = req_distinguished_name
-> policy              = policy_anything
-> x509_extensions     = usr_cert
-> req_extensions      = v3_req
+> [ req ]</br>
+> distinguished_name  = req_distinguished_name</br>
+> policy              = policy_anything</br>
+> x509_extensions     = usr_cert</br>
+> req_extensions      = v3_req</br>
 >
 > [ req_distinguished_name ]
 > commonName                      = Common Name (eg, your name or your server hostname)
