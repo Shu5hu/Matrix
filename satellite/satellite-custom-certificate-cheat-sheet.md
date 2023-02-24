@@ -1,47 +1,60 @@
+#
 
+Check Apache used certififcate to see that is a self sign
+
+```
 openssl x509 -in /etc/pki/katello/certs/katello-apache.crt -text |egrep '(Issuer:|Subject:|CA:|DNS:|Digital|Not Before|Not After)'
-[Check Apache used certififcate to see that is a self sign]
+```
 
+Create directory for the satellite server certificates
+
+```
 mkdir /root/satellite_cert
+```
 
+Create praivte key
+
+```
 openssl genrsa -out /root/satellite_cert/satellite_cert_key.pem 4096
-[Create praivte key]
+```
 
+Create config file
+
+```
 vi /root/satellite_cert/openssl.cnf
-[Create config file]
+```
 
-{
+> [ req ]
+> distinguished_name  = req_distinguished_name
+> policy              = policy_anything
+> x509_extensions     = usr_cert
+> req_extensions      = v3_req
+>
+> [ req_distinguished_name ]
+> commonName                      = Common Name (eg, your name or your server hostname)
+>
+> [ usr_cert ]
+> subjectKeyIdentifier    = hash
+> authorityKeyIdentifier  = keyid,issuer
+> basicConstraints        = CA:FALSE
+> extendedKeyUsage        = serverAuth
+> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+> subjectAltName          = @alt_names
 
-[ req ]
-distinguished_name  = req_distinguished_name
-policy              = policy_anything
-x509_extensions     = usr_cert
-req_extensions      = v3_req
+> [ v3_req ]
+> basicConstraints        = CA:FALSE
+> extendedKeyUsage        = serverAuth
+> keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+> subjectAltName          = @alt_names
+>
+> [ alt_names ]
+> DNS.1 = your.server.com
 
-[ req_distinguished_name ]
-commonName                      = Common Name (eg, your name or your server hostname)
+Generate the Certificate Signing Request
 
-[ usr_cert ]
-subjectKeyIdentifier    = hash
-authorityKeyIdentifier  = keyid,issuer
-basicConstraints        = CA:FALSE
-extendedKeyUsage        = serverAuth
-keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-subjectAltName          = @alt_names
-
-[ v3_req ]
-basicConstraints        = CA:FALSE
-extendedKeyUsage        = serverAuth
-keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-subjectAltName          = @alt_names
-
-[ alt_names ]
-DNS.1 = your.server.com
-
-}
-
+```
 openssl req -new -key /root/satellite_cert/satellite_cert_key.pem -config /root/satellite_cert/openssl.cnf -out /root/satellite_cert/satellite_cert_csr.pem
-[Generate the Certificate Signing Request]
+```
 
 
 
