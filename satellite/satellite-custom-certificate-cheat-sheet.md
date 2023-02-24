@@ -29,9 +29,11 @@ vi /root/satellite_cert/openssl.cnf
 > policy              = policy_anything</br>
 > x509_extensions     = usr_cert</br>
 > req_extensions      = v3_req</br>
->
+></br>
 > [ req_distinguished_name ]
+> 
 > commonName                      = Common Name (eg, your name or your server hostname)
+> 
 >
 > [ usr_cert ]
 > subjectKeyIdentifier    = hash
