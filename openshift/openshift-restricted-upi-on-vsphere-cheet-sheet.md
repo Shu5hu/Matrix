@@ -101,10 +101,9 @@ https://console.redhat.com/openshift/downloads#tool-mirror-registry
 tar -xvzf tar/mirror-registry.tar.gz -C .
 ```
 
-  > FILES INCLUDE THE TAR FILE - </br>
-  >   execution-environment.tar </br>
-  >   image-archive.tar </br>
-  >   mirror-registry </br>
+> execution-environment.tar </br>
+> image-archive.tar </br>
+> mirror-registry </br>
 
 #### CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN 
 
@@ -316,7 +315,7 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${R
 oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
 ```
 
-#
+</br>
 
 ## COPY THE DIRECTORY WITH THE IMAGES YOU HAVE BEEN CREATED BEFORE FROM THE CONNECTED NETWORK TO YOUR LAN 
 
