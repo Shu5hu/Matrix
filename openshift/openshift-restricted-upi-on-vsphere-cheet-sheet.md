@@ -12,7 +12,7 @@ yum install haproxy
 
 *edit the configuration file to fits your DNS names*
 
-```
+```bash
 vim /etc/haproxy/haproxy.cfg
 ```
 
