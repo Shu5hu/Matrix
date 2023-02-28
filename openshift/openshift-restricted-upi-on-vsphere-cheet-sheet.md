@@ -1,88 +1,88 @@
+#
 
+### THIS INSTALLATION REQUIRES YOU TO USE LOAD BALANCER
+ 
+#### INSTALL LOAD BALANCER IN CASE YOU DONT HAVE ONE ALLREADY 
 
-RESTRICTED NETWORK -
+*install simple load balancer to use on linux machines*
 
+```
+yum install haproxy
+```
 
-## INSTALL LOAD BALANCER IN CASE YOU DONT HAVE ONE ALLREADY ##
+*edit the configuration file to fits your DNS names*
 
-$ yum install haproxy
-[install simple load balancer to use on linux machines]
+```
+vim /etc/haproxy/haproxy.cfg
+```
 
-$ vim /etc/haproxy/haproxy.cfg
-[edit the configuration file to fits your DNS names]
+> ```
+> global
+>  log         127.0.0.1 local2
+>  pidfile     /var/run/haproxy.pid
+>  maxconn     4000
+>  daemon
+> defaults
+>  mode                    http
+>  log                     global
+>  option                  dontlognull
+>  option http-server-close
+>  option                  redispatch
+>  retries                 3
+>  timeout http-request    10s
+>  timeout queue           1m
+>  timeout connect         10s
+>  timeout client          1m
+>  timeout server          1m
+>  timeout http-keep-alive 10s
+>  timeout check           10s
+>  maxconn                 3000
+> frontend stats
+>  bind *:1936
+>  mode            http
+>  log             global
+>  maxconn 10
+>  stats enable
+>  stats hide-version
+>  stats refresh 30s
+>  stats show-node
+>  stats show-desc Stats for ocp4 cluster
+>  stats auth admin:ocp4
+>  stats uri /stats
+> listen api-server-6443
+>  bind *:6443
+>  mode tcp
+>  server bootstrap bootstrap.<cluster name.domain name>:6443 check inter 1s backup
+>  server master0 master0.<cluster name.domain name>:6443 check inter 1s
+>  server master1 master1.<cluster name.domain name>:6443 check inter 1s
+>  server master2 master2.<cluster name.domain name>:6443 check inter 1s
+> listen machine-config-server-22623
+>  bind *:22623
+>  mode tcp
+>  server bootstrap bootstrap.<cluster name.domain name>:22623 check inter 1s backup
+>  server master0 master0.<cluster name.domain name>:22623 check inter 1s
+>  server master1 master1.<cluster name.domain name>:22623 check inter 1s
+>  server master2 master2.<cluster name.domain name>:22623 check inter 1s
+> listen ingress-router-443
+>  bind *:443
+>  mode tcp
+>  balance source
+>  server worker0 worker0.<cluster name.domain name>:443 check inter 1s
+>  server worker1 worker1.<cluster name.domain name>:443 check inter 1s
+> listen ingress-router-80
+>  bind *:80
+>  mode tcp
+>  balance source
+>  server worker0 worker0.<cluster name.domain name>:80 check inter 1s
+>  server worker1 worker1.<cluster name.domain name>:80 check inter 1s
+> ```
 
-        {
+*start and enable the service after the config file is ready*
 
-        global
-          log         127.0.0.1 local2
-          pidfile     /var/run/haproxy.pid
-          maxconn     4000
-          daemon
-        defaults
-          mode                    http
-          log                     global
-          option                  dontlognull
-          option http-server-close
-          option                  redispatch
-          retries                 3
-          timeout http-request    10s
-          timeout queue           1m
-          timeout connect         10s
-          timeout client          1m
-          timeout server          1m
-          timeout http-keep-alive 10s
-          timeout check           10s
-          maxconn                 3000
-        frontend stats
-          bind *:1936
-          mode            http
-          log             global
-          maxconn 10
-          stats enable
-          stats hide-version
-          stats refresh 30s
-          stats show-node
-          stats show-desc Stats for ocp4 cluster
-          stats auth admin:ocp4
-          stats uri /stats
-        listen api-server-6443
-          bind *:6443
-          mode tcp
-          server bootstrap bootstrap.<cluster name.domain name>:6443 check inter 1s backup
-          server master0 master0.<cluster name.domain name>:6443 check inter 1s
-          server master1 master1.<cluster name.domain name>:6443 check inter 1s
-          server master2 master2.<cluster name.domain name>:6443 check inter 1s
-        listen machine-config-server-22623
-          bind *:22623
-          mode tcp
-          server bootstrap bootstrap.<cluster name.domain name>:22623 check inter 1s backup
-          server master0 master0.<cluster name.domain name>:22623 check inter 1s
-          server master1 master1.<cluster name.domain name>:22623 check inter 1s
-          server master2 master2.<cluster name.domain name>:22623 check inter 1s
-        listen ingress-router-443
-          bind *:443
-          mode tcp
-          balance source
-          server worker0 worker0.<cluster name.domain name>:443 check inter 1s
-          server worker1 worker1.<cluster name.domain name>:443 check inter 1s
-        listen ingress-router-80
-          bind *:80
-          mode tcp
-          balance source
-          server worker0 worker0.<cluster name.domain name>:80 check inter 1s
-          server worker1 worker1.<cluster name.domain name>:80 check inter 1s
+```
+systemctl enable-now haproxy.service
+```
 
-        ## OPTIONAL:DEBUG ##
-        listen ingress-router-8080
-          bind *:8090
-          mode tcp
-          balance source
-          server localhost localhost:8080 check inter 1s
-
-        }
-
-$ systemctl enable-now haproxy.service
-[start and enable the service after the config file is ready]
 
 
 
