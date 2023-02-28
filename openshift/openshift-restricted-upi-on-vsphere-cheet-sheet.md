@@ -6,13 +6,13 @@
 
 *install simple load balancer to use on linux machines*
 
-```bash
+```
 yum install haproxy
 ```
 
 *edit the configuration file to fits your DNS names*
 
-```bash
+```
 vim /etc/haproxy/haproxy.cfg
 ```
 
