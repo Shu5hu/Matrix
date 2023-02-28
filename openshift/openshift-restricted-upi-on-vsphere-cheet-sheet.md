@@ -87,7 +87,7 @@ systemctl enable-now haproxy.service
  
 #### INSTALL REGISTRY IN CASE YOU DONT HAVE ONE ALLREADY
 
-##### [!] THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
+##### <span style="color:red">[!]</span> THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
 
 *Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster*
 
