@@ -1,3 +1,5 @@
+## PREREQUISITS - 
+
 #
 
 #### THIS INSTALLATION REQUIRES YOU TO USE LOAD BALANCER
@@ -87,7 +89,7 @@ systemctl enable-now haproxy.service
  
 #### INSTALL REGISTRY IN CASE YOU DONT HAVE ONE ALLREADY
 
-##### <span style="color:red">[!]</style> THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
+##### [!] THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
 
 *Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster*
 
@@ -145,7 +147,7 @@ openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
 vim server.cnf
 ```
 
-<span style="color: red;">[!]</span> *YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
+*[!] YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
 
   ```
   [ req ]
@@ -211,79 +213,115 @@ mkdir /quay
 * *[!] THE INSTALLATION WILL GENERATE LOGIN CREDENTIAL FOR THE MIRROR-REGISTRY, **KEEP THEM***
 
   *`EXAMPLE: { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g }`*
-  
 
+</br>
 
+## GET THE OPENSHIFT INSTALLATION IMAGES -
 
+#
 
-CONNECTED NETWORK -
+##### [!] THIS PROCCESS REQUIRES INTERNET ACCESS 
+
+*download oc client cli*
 
 https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/4.11.22/x86_64/product-software
-[download oc client cli]
 
-$ echo $PATH
-[print the bianry files location on your server]
+*extract the binary files*
 
-$ tar -xvzf oc-4.11.18-linux.tar.gz .
-[extract the binary files]
+```
+tar -xvzf oc-4.11.18-linux.tar.gz .
+```
 
-$ install oc /usr/local/bin
-[install oc client]
+*install oc client*
 
-$ oc version
-[check oc version]
+```
+install oc /usr/local/bin
+```
 
-$ OCP_RELEASE=[client version from the `oc version` stdout]
-[create OCP_RELEASE variable with the oc version as value]
+*check oc version*
+
+```
+oc version
+```
+
+*create OCP_RELEASE variable with the oc version as value*
+
+```
+OCP_RELEASE=[client version from the `oc version` stdout]
+```
+
+*download your pull-secret*
 
 https://console.redhat.com/openshift/install/pull-secret
-[download your pull-secret]
 
-$ cat ./pull-secret.txt | jq . > /root/pull-secret.json
-[convert your pull-secret file to JSON format]
+*convert your pull-secret file to JSON format*
 
-## CREATE VARIABLES TO PULL THE RELEVANT IMAGES FOR THE INSTALLATION ##
-$ LOCAL_REGISTRY='<local_registry_host_name>:<local_registry_host_port>'
-$ LOCAL_REPOSITORY='ocp4/openshift4'
-$ PRODUCT_REPO='openshift-release-dev'
-$ LOCAL_SECRET_JSON='<path_to_pull_secret>'
-$ RELEASE_NAME="ocp-release"
-$ ARCHITECTURE=`uname -m`
+```
+cat ./pull-secret.txt | jq . > /root/pull-secret.json
+```
 
-$ mkdir mirror-images
-[create directory for the images]
+*create variables to pull the relevent images for the installation*
 
-$ REMOVABLE_MEDIA_PATH='/root/mirror-images/'
-[create variable to use it in the pull command, [!] the path must be absolute path]
+```
+LOCAL_REGISTRY='<local_registry_host_name>:<local_registry_host_port>'
+```
 
-$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
-[dry run the pull command to generate the imageContentSources from the output, use it later in the install-config file]
+```
+LOCAL_REPOSITORY='ocp4/openshift4'
+```
 
-        {
+```
+PRODUCT_REPO='openshift-release-dev'
+```
 
-        imageContentSources:
-        - mirrors:
-          - <your.registry.server>:8443/ocp4/openshift4
-          source: quay.io/openshift-release-dev/ocp-release
-        - mirrors:
-          - <your.registry.server>:8443/ocp4/openshift4
-          source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+```
+LOCAL_SECRET_JSON='<path_to_pull_secret>'
+```
 
-        }
+```
+RELEASE_NAME="ocp-release"
+```
 
-$ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
-[pull the images from Red-Hat to the local directory to your local machine]
+```
+ARCHITECTURE=`uname -m`
+```
 
+*create directory for the images*
 
+```
+mkdir mirror-images
+```
 
+*create variable to use it in the pull command, [!] **the path must be absolute path***
 
+```
+REMOVABLE_MEDIA_PATH='/root/mirror-images/'
+```
 
-RESTRICTED NETWORK -
+*dry run the pull command to generate the imageContentSources from the output, use it later in the install-config file*
 
-## COPY THE DIRECTORY WITH THE IMAGES YOU HAVE BEEN CREATED BEFORE FROM THE CONNECTED NETWORK TO YOUR LAN ##
+```
+oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
+```
 
-https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/4.11.22/x86_64/product-software
-[download oc client cli and the opeshift-installer]
+  imageContentSources:
+  - mirrors:
+    - <your.registry.server>:8443/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-release
+  - mirrors:
+    - <your.registry.server>:8443/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+
+*pull the images from Red-Hat to the local directory to your local machine*
+
+```
+oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/mirror quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE}
+```
+
+#
+
+## COPY THE DIRECTORY WITH THE IMAGES YOU HAVE BEEN CREATED BEFORE FROM THE CONNECTED NETWORK TO YOUR LAN 
+
 
 $ echo $PATH
 [print the bianry files location on your server]
@@ -328,6 +366,9 @@ $ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mir
 
 ## START THE INSTALLATION ##
 
+https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/4.11.22/x86_64/product-software
+[download oc client cli and the opeshift-installer]
+ 
 $ ./openshift-install version
 [check the version of the insatll tool,[!] the version must be the same as the oc client tool]
 
