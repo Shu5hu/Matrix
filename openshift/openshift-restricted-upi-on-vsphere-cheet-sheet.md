@@ -87,13 +87,11 @@ systemctl enable-now haproxy.service
  
 #### INSTALL REGISTRY IN CASE YOU DONT HAVE ONE ALLREADY
 
+##### [!] THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
 
+*Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster*
 
-
-## [!] THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
- 
 https://console.redhat.com/openshift/downloads#tool-mirror-registry
-[Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster ]
 
 $ tar -xvzf tar/mirror-registry.tar.gz -C .
 [extract the files from the tar file to your location]
