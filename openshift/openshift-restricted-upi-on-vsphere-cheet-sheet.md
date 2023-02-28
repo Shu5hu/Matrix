@@ -101,10 +101,10 @@ https://console.redhat.com/openshift/downloads#tool-mirror-registry
 tar -xvzf tar/mirror-registry.tar.gz -C .
 ```
 
-  > FILES INCLUDE THE TAR FILE -
-  >   execution-environment.tar 
-  >   image-archive.tar
-  >   mirror-registry
+  > FILES INCLUDE THE TAR FILE - </br>
+  >   execution-environment.tar </br>
+  >   image-archive.tar </br>
+  >   mirror-registry </br>
 
 #### CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN 
 
