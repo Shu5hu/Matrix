@@ -145,7 +145,7 @@ openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
 vim server.cnf
 ```
 
-* *[!] YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
+<span style="color: red;">[!]</span> *YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
 
   ```
   [ req ]
