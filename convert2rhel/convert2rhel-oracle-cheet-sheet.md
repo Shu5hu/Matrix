@@ -77,6 +77,8 @@ chmod 0600 activiation_key.ini
 
 #
 
+Start the conversion -
+
 ```
 convert2rhel --org <ORGANIZATION_NAME> --config-file activiation_key.ini
 ```
