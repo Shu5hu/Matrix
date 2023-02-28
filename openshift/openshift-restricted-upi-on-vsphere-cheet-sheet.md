@@ -145,64 +145,71 @@ openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
 vim server.cnf
 ```
 
-* *[!] YOU ==MUST== ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
+* *[!] YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
 
-        {
+  ```
+  [ req ]
+  distinguished_name  = req_distinguished_name
+  policy              = policy_anything
+  x509_extensions     = ext
+  req_extensions      = v3_req
 
-        [ req ]
-        distinguished_name  = req_distinguished_name
-        policy              = policy_anything
-        x509_extensions     = ext
-        req_extensions      = v3_req
+  [ req_distinguished_name ]
+  commonName                      = Common Name (eg, your name or your server hostname)
 
-        [ req_distinguished_name ]
-        commonName                      = Common Name (eg, your name or your server hostname)
+  [ ext ]
+  subjectKeyIdentifier    = hash
+  authorityKeyIdentifier  = keyid,issuer
+  basicConstraints        = CA:FALSE
+  extendedKeyUsage        = serverAuth
+  keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+  subjectAltName          = @alt_names
 
-        [ ext ]
-        subjectKeyIdentifier    = hash
-        authorityKeyIdentifier  = keyid,issuer
-        basicConstraints        = CA:FALSE
-        extendedKeyUsage        = serverAuth
-        keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-        subjectAltName          = @alt_names
+  [ v3_req ]
+  basicConstraints        = CA:FALSE
+  extendedKeyUsage        = serverAuth
+  keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+  subjectAltName          = @alt_names
 
-        [ v3_req ]
-        basicConstraints        = CA:FALSE
-        extendedKeyUsage        = serverAuth
-        keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-        subjectAltName          = @alt_names
+  [ alt_names ]
+  IP.1 = 1.1.1.1
+  DNS.1 = <your.server.com>
+  DNS.2 = <your>
+  ```
+```
+openssl genrsa -out server.key 4096
+```
 
-        [ alt_names ]
-        IP.1 = 1.1.1.1
-        DNS.1 = <your.server.com>
-        DNS.2 = <your>
+```
+openssl req -config server.cnf -new -key server.key -out server.csr
+```
 
-        }
+```
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -extensions ext -extfile server.cnf
+```
 
-$ openssl genrsa -out server.key 4096
-[create key for the server certificate]
+```
+cp <ca certificate> /etc/pki/ca-trust/source/anchors/
+```
 
-$ openssl req -config server.cnf -new -key server.key -out server.csr
-[create certificate request for the root ca]
+```
+update-ca-trust
+```
 
-$ openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -extensions ext -extfile server.cnf
-[generate server certificate with you key,cofig file and your server request]
+*create directory for the mirror-registry*
 
-$ cp <ca certificate> /etc/pki/ca-trust/source/anchors/
-[copy the ca certificate to the trusted-ca server location]
+```
+mkdir /quay
+```
 
-$ update-ca-trust
-[update the server with the new certificate]
+*run the mirror registry installation with the server self-signed certificate*
 
-$ mkdir /quay
-[create directory for the mirror-registry]
+```
+./mirror-registry install --quayHostname [server fqdn] --quayRoot [registry directory] --sslCert [server certificate] --sslKey [server key]
+```
 
-$ ./mirror-registry install --quayHostname [server fqdn] --quayRoot [registry directory] --sslCert [server certificate] --sslKey [server key]
-[run the mirror registry installation with the server self-signed certificate]
-
-## [!] THE INSTALLATION WILL GENERATE LOGIN CREDENTIAL FOR THE MIRROR-REGISTRY, KEEP THEM ! ##
-
-## EXAMPLE - { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g } ##
+* *[!] THE INSTALLATION WILL GENERATE LOGIN CREDENTIAL FOR THE MIRROR-REGISTRY, **KEEP THEM***
+  *EXAMPLE: { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g }*
 
 
 
