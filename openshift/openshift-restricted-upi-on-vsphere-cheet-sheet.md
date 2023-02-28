@@ -93,59 +93,59 @@ systemctl enable-now haproxy.service
 
 https://console.redhat.com/openshift/downloads#tool-mirror-registry
 
-$ tar -xvzf tar/mirror-registry.tar.gz -C .
-[extract the files from the tar file to your location]
+*extract the files from the tar file to your location*
 
-        ## TAR FILE INCLUDE FILES - ##
-        - execution-environment.tar
-        - image-archive.tar
-        - mirror-registry
+```
+tar -xvzf tar/mirror-registry.tar.gz -C .
+```
 
+> FILES INCLUDE THE TAR FILE -
+> execution-environment.tar
+> image-archive.tar
+> mirror-registry
 
+#### CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN 
 
+```
+mkdir ~/openssl
+```
 
-## CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN ## 
+```
+cd ~/openssl/
+```
 
-$ mkdir openssl
-[create directory for the certificates]
+```
+vim ca.cnf
+```
 
-$ cd openssl/
-[get in the directory you have been created]
+  ```
+  [ req ]
+  distinguished_name = req_distinguished_name
+  policy             = policy_anything
+  x509_extensions     = v3_ca
 
-## CREATE CA SELF SIGNED CERTIFICATE IN CASE YOU DONT HAVE ROOT CA ##
+  [ req_distinguished_name ]
+  commonName                      = Common Name (eg, your name or your server hostname) ## Print this message
 
-$ vim ca.cnf
-[ create configuration file for the ca certificate ]
+  [ v3_ca ]
+  subjectKeyIdentifier = hash
+  authorityKeyIdentifier = keyid:always,issuer
+  basicConstraints = critical,CA:true
+  ```
 
-        {
+```
+openssl genrsa -out ca.key 4096
+```
 
-        [ req ]
-        distinguished_name = req_distinguished_name
-        policy             = policy_anything
-        x509_extensions     = v3_ca
+```
+openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
+```
 
-        [ req_distinguished_name ]
-        commonName                      = Common Name (eg, your name or your server hostname) ## Print this message
+```
+vim server.cnf
+```
 
-        [ v3_ca ]
-        subjectKeyIdentifier = hash
-        authorityKeyIdentifier = keyid:always,issuer
-        basicConstraints = critical,CA:true
-
-        }
-
-$ openssl genrsa -out ca.key 4096
-[create key for the ca certificate]
-
-$ openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
-[create the roo ca certificate with the key and the config file]
-
-## CREATE SELF-SIGNED CERTIFICATE ##
-
-$ vim server.cnf
-[create the server config file for the server certificate]
-
-## [!] YOU MUST ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY ##  
+* *[!] YOU ==MUST== ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
 
         {
 
