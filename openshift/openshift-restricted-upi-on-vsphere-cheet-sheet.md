@@ -6,7 +6,7 @@
 
 *install simple load balancer to use on linux machines*
 
-```
+```bash
 yum install haproxy
 ```
 
