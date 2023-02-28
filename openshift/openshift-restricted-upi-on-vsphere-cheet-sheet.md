@@ -102,11 +102,8 @@ tar -xvzf tar/mirror-registry.tar.gz -C .
 ```
 
   > FILES INCLUDE THE TAR FILE -
-  > 
-  >   execution-environment.tar
-  >   
+  >   execution-environment.tar 
   >   image-archive.tar
-  >   
   >   mirror-registry
 
 #### CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN 
