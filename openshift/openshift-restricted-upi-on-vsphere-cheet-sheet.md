@@ -551,7 +551,7 @@ rm -f openshift/99_openshift-cluster-api_master-machines-*.yaml openshift/99_ope
 *change <mastersSchedulable:> parameter to - false. this change parameter to prevent the orcestrator to run pods on the master nodes*
 
 ```
-sed 's/true/false/g' manifests/cluster-scheduler-02-config.yml
+sed -i 's/true/false/g' manifests/cluster-scheduler-02-config.yml
 ```
 
 *go back to the directory with the installer tool*
