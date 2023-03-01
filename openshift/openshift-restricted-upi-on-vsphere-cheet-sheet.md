@@ -2,11 +2,11 @@
 
 </br>
 
-## PREREQUISITES - 
+# PREREQUISITES - 
 
-#### THIS INSTALLATION REQUIRES YOU TO USE LOAD BALANCER
+* This installation required load balancer
  
-##### INSTALL LOAD BALANCER IN CASE YOU DONT HAVE ONE ALLREADY 
+###### Install Load Balancer in case you don't have one allready 
 
 *install simple load balancer to use on linux machines*
 
@@ -89,11 +89,9 @@ vim /etc/haproxy/haproxy.cfg
 systemctl enable-now haproxy.service
 ```
 
-#
- 
-#### INSTALL REGISTRY IN CASE YOU DONT HAVE ONE ALLREADY
+# Red Hat minimal Quay registry
 
-##### [!] THIS REGISTRY MUST HAVE NETWORK CONNECTION WITH THE BASTION MACHINE IN THE LAN 
+###### [!] This registry must have network connection with the bastion machine in the lan 
 
 *Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster*
 
@@ -109,7 +107,7 @@ tar -xvzf tar/mirror-registry.tar.gz -C .
 > image-archive.tar </br>
 > mirror-registry </br>
 
-#### CREATE SELF-SIGNED CERTIFICATE FOR THE REGISTRY LOGIN 
+###### Create self-signed certificate for the registry login 
 
 ```
 mkdir ~/openssl
@@ -150,7 +148,7 @@ openssl req -new -x509 -days 3650 -config ca.cnf -key ca.key -out ca.crt
 vim server.cnf
 ```
 
-*[!] YOU **MUST** ADD YOUR SERVER FQDN AND SERVER IP UNDER [ alt_names ] CATEGORY*  
+*[!] You **must** add your server FQDN and server IP under [ alt_names ] category*  
 
   ```
   [ req ]
@@ -213,15 +211,15 @@ mkdir /quay
 ./mirror-registry install --quayHostname <SERVER_FQDN> --quayRoot <REGISTRY_DIRECTORY_PATH> --sslCert <SERVER_CERTIFICATE> --sslKey <SERVER_KEY>
 ```
 
-* *[!] THE INSTALLATION WILL GENERATE LOGIN CREDENTIAL FOR THE MIRROR-REGISTRY, **KEEP THEM***
+* *[!] The installation will generate login credentials for the mirror-registry, **KEEP THEM***
 
   *`EXAMPLE: { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g }`*
 
 </br>
 
-## GET THE OPENSHIFT INSTALLATION IMAGES -
+# Pull OpenShift installation images
 
-##### [!] THIS PROCCESS REQUIRES INTERNET ACCESS 
+* *[!] This proccess requires internet access*
 
 *download oc client cli*
 
@@ -305,7 +303,7 @@ REMOVABLE_MEDIA_PATH='/root/mirror-images/'
 oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
 ```
 
-EXAMPLE: [!] store the output of the last command to use latter in the install-config file
+Example: [!] store the output of the last command to use latter in the install-config file
      
     imageContentSources:
     - mirrors:
@@ -324,11 +322,9 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/m
 
 </br>
 
-## COPY THE DIRECTORY WITH THE IMAGES YOU HAVE BEEN CREATED BEFORE FROM THE CONNECTED NETWORK TO YOUR LAN 
+# Push images to the local registry
 
-#### 
-
-##### BRING THE OC CLIENT CLI FROM THE CONNECTED SERVER
+* *Bring the OC cleint from the connected server*
 
 ```
 tar -xvzf oc-<VERSION>-linux.tar.gz .
@@ -420,7 +416,7 @@ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirro
 
 </br>
 
-## INSTALLATION PROCCESS
+# Installation proccess
 
 *check the version of the insatll tool,[!] the version **must** be the same as the oc client tool*
 
@@ -589,11 +585,11 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 
 *deploy the coreOS template to the cluster directory*
 
-* *[!] **DO NOT START** THE COREOS TEMPLATE.*
+* *[!] **Do not start** the coreOS Ttemplate.*
 
-##### CREATE VM'S FROM THE TEMPLATE 
+###### Create clones from coreOS template 
 
-*MINIMAL REQUIREMENTS -*
+*Minimal requirements -*
         
                     CPU   MEMORY    STORAGE
         bootstrap   8     16        120
@@ -603,7 +599,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
         worker0     4     8         100
         worker1     4     8         100
         
-##### ADD THE PARAMETERS ABOVE TO THE ADVANCE CONFIG IN YOUR MACHINE TO LOAD THE MCHINE WITH THE IGNITION FILES
+###### Add the parameters above to the advance config in your machine to load the machine with the ignition files
 
     guestinfo.afterburn.initrd.network-karg = <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> 
     guestinfo.ignition.config.data = <copy of the ignition file content>
@@ -616,7 +612,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 ```
 cp install-config/auth/kubeconfig .kube/config
 ```
-***FOR LOSERS** - `export KUBECONFIG=<installation_directory>/auth/kubeconfig`*
+***For Losers** - `export KUBECONFIG=<installation_directory>/auth/kubeconfig`*
 
 *search for nodes request*
 
@@ -630,7 +626,7 @@ oc get csr |grep Pending
 oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificate approve $x;done
 ```
 
-* *RUN THIS CAMMAND MANY TIMES*
+* *Run this command many times*
 
 *run this command to wait and pray for the installation tp complete successfully*
 
@@ -638,7 +634,7 @@ oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificat
 ./openshift-install wait-for install-complete --dir install-config/ --log-level=debug
 ```
 
-* OPTIONAL:
+* Optional:
 
 *disable the operator hub sources from the internet*
 
