@@ -1,0 +1,61 @@
+    - name: Update the system to the latest state
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Change the kernel to compitable version
+      shell: 'grubby --set-default /boot/vmlinuz-`rpm -q --qf "%{BUILDTIME}\t%{EVR}.%{ARCH}\n" kernel | sort -nr | head -1 | cut -f2`'
+
+    - name: Reboot the system
+      reboot:
+        reboot_timeout: 300
+        post_reboot_delay: 5
+
+    - name: Create direcorty for CA certificate
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "/etc/rhsm/ca/"
+        - "/usr/share/convert2rhel/subscription-manager/"
+
+    - name: Get the repo data to install the convert tool
+      get_url:
+        url: "{{ item.FILE }}"
+        dest: "{{ item.PATH }}"
+        validate_certs: false
+      loop:
+        - { FILE: 'https://www.redhat.com/security/data/fd431d51.txt', PATH: '/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release' }
+        - { FILE: 'https://ftp.redhat.com/redhat/convert2rhel/redhat-uep.pem', PATH: '/etc/rhsm/ca/redhat-uep.pem' }
+        - { FILE: 'https://ftp.redhat.com/redhat/convert2rhel/{{ MAJOR_VERSION }}/convert2rhel.repo', PATH: '/etc/yum.repos.d/convert2rhel.repo' }
+        - { FILE: 'https://{{ SATELLITE_SERVER }}/pub/katello-ca-consumer-latest.noarch.rpm', PATH: '/usr/share/convert2rhel/subscription-manager/katello-ca-consumer-latest.noarch.rpm' }
+
+    - name: Install convert2rhel tool
+      yum:
+        name: convert2rhel
+        state: present
+
+    - name: Create .ini file for rhel packeges
+      lineinfile:
+        path: ~/activiation_key.ini
+        line: |
+          [subscription_manager]
+          activation_key = {{ ACTIVATION_KEY }}
+        create: true
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: Run the conversion
+      shell: "convert2rhel --org {{ ORGANIZATION_ID }} --config-file ~/activiation_key.ini -y"
+      register: CONVERT
+      
+#    - name: Run the conversion
+#      shell: "convert2rhel --username {{ USERNAME }} --password {{ PASSWORD }} --pool {{ POOL_ID }} -y"
+#      register: CONVERT
+
+    - name: Reboot the system
+      reboot:
+        reboot_timeout: 300
+        post_reboot_delay: 5
