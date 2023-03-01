@@ -602,9 +602,9 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 
     guestinfo.afterburn.initrd.network-karg = <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> 
     guestinfo.ignition.config.data = <copy of the ignition file content>
-    guestinfo.ignition.config.data.encoding = <base64>
-    disk.EnableUUID  = <TRUE>
-    stealclock.enable = <TRUE>
+    guestinfo.ignition.config.data.encoding = base64
+    disk.EnableUUID  = TRUE
+    stealclock.enable = TRUE
 
 *copy the kubconfig file to the designated location*
 
