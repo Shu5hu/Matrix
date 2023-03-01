@@ -477,7 +477,6 @@ mkdir <installation_directory>
 vim install-config.yaml
 ```
 
-        ```
         apiVersion: v1
         baseDomain: example.com 
         compute: 
@@ -514,7 +513,6 @@ vim install-config.yaml
         - mirrors:
           - <local_registry>/<local_repository_name>/release
           source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
-          ```
           
 *create copy of the install-config file. [!] **VERY IMPORTENT***
 
@@ -600,30 +598,44 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
         
 ##### ADD THE PARAMETERS ABOVE TO THE ADVANCE CONFIG IN YOUR MACHINE TO LOAD THE MCHINE WITH THE IGNITION FILES
 
-  guestinfo.afterburn.initrd.network-karg <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> </br>
-  guestinfo.ignition.config.data <copy of the ignition file content> </br>
-  guestinfo.ignition.config.data.encoding <base64> </br>
-  disk.EnableUUID <TRUE> </br>
-  stealclock.enable <TRUE> </br>
+    guestinfo.afterburn.initrd.network-karg <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> </br>
+    guestinfo.ignition.config.data <copy of the ignition file content> </br>
+    guestinfo.ignition.config.data.encoding <base64> </br>
+    disk.EnableUUID <TRUE> </br>
+    stealclock.enable <TRUE> </br>
 
+*copy the kubconfig file to the designated location*
 
+```
+cp install-config/auth/kubeconfig .kube/config
+```
+***FOR LOSERS** - export KUBECONFIG=<installation_directory>/auth/kubeconfig*
 
-## FOR LOSERS - export KUBECONFIG=<installation_directory>/auth/kubeconfig ## 
-$ cp install-config/auth/kubeconfig .kube/config
-[copy the kubconfig file to the designated location]
+*search for nodes request*
 
-$ oc get csr |grep Pending
-[search for nodes request]
+```
+oc get csr |grep Pending
+```
 
-## RUN THIS CAMMAND MANY TIMES ##
-$ oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificate approve $x;done
-[approve all the nodes requsets]
+*approve all the nodes requsets*
 
-$ ./openshift-install wait-for install-complete --dir install-config/ --log-level=debug
-[run this command to wait and pray for the installation tp complete successfully]
+```
+oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificate approve $x;done
+```
 
-## DONE ##
+* *RUN THIS CAMMAND MANY TIMES*
 
-$ oc patch OperatorHub cluster --type json -p '[{"op": "add", "path": "/spec/disableAllDefaultSources", "value": true}]'
-[disable the operator hub sources from the internet]
+*run this command to wait and pray for the installation tp complete successfully*
+
+```
+./openshift-install wait-for install-complete --dir install-config/ --log-level=debug
+```
+
+* OPTIONAL:
+
+*disable the operator hub sources from the internet*
+
+```
+oc patch OperatorHub cluster --type json -p '[{"op": "add", "path": "/spec/disableAllDefaultSources", "value": true}]'
+```
 
