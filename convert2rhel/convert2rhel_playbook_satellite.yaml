@@ -51,10 +51,6 @@
   shell: "convert2rhel --org {{ ORGANIZATION_ID }} --config-file ~/activiation_key.ini -y"
   register: CONVERT
       
-#    - name: Run the conversion
-#      shell: "convert2rhel --username {{ USERNAME }} --password {{ PASSWORD }} --pool {{ POOL_ID }} -y"
-#      register: CONVERT
-
 - name: Reboot the system
   reboot:
     reboot_timeout: 300
