@@ -323,63 +323,121 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/m
 
 ##### BRING THE OC CLIENT CLI FROM THE CONNECTED SERVER
 
+```
+tar -xvzf oc-<VERSION>-linux.tar.gz .
+```
+
+*install oc client*
+
+```
+install oc /usr/local/bin
+```
+
+*check oc version*
+
+```
+oc version
+```
+
+*downlowd the openshift installer with the same version as the oc client*
+
+https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/$VERSION/x86_64/product-software
+
 *extract the binary files to the designated location*
 
 ```
-tar -xvzf oc-<VERSION>-linux.tar.gz -C <binary directory from the $PATH variable>
+tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
 ```
 
+*create OCP_RELEASE variable with the oc version as value*
 
-tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
-[extract the openshift installation tool to the install location]
+```
+OCP_RELEASE=<client version from the `oc version` stdout>
+```
 
-$ oc version
-[check oc version]
+*login to your registry*
 
-$ OCP_RELEASE=[client version from the `oc version` stdout]
-[create OCP_RELEASE variable with the oc version as value]
+```
+podman login -u init -p <PASSWORD>
+```
 
-$ podman login -u init -p 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g
-[login to your registry]
+*create pull-scret with with the credentials of your registry*
 
+```
 cat $XDG_RUNTIME_DIR/containers/auth.json > /root/pull-secret.json
-[create pull-scret with with the credentials of your registry]
+```
 
-## CREATE VARIABLES TO PUSH THE RELEVANT IMAGES FOR THE INSTALLATION ##
-$ LOCAL_REGISTRY='<local_registry_host_name>:<local_registry_host_port>'
-$ LOCAL_REPOSITORY='ocp4/openshift4'
-$ PRODUCT_REPO='openshift-release-dev'
-$ LOCAL_SECRET_JSON='<path_to_pull_secret>'
-$ RELEASE_NAME="ocp-release"
-$ ARCHITECTURE=`uname -m`
+*create variables to push the relevant images to your registry for the installtion*
 
-$ mkdir mirror-images
-[create directory for the images]
+```
+LOCAL_REGISTRY='<local_registry_host_name>:<local_registry_host_port>'
+```
 
-$ REMOVABLE_MEDIA_PATH='/root/mirror-images/'
-[create variable to use it in the push command, [!] the path must be absolute path]
+```
+LOCAL_REPOSITORY='ocp4/openshift4'
+```
 
-$ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror "file://openshift/release:${OCP_RELEASE}*" ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
-[push the images to your local registry]
+```
+PRODUCT_REPO='openshift-release-dev'
+```
 
+```
+LOCAL_SECRET_JSON='<path_to_pull_secret>'
+```
 
+```
+RELEASE_NAME="ocp-release"
+```
 
+```
+ARCHITECTURE=`uname -m`
+```
 
-## START THE INSTALLATION ##
+*create directory for the images*
 
-https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/4.11.22/x86_64/product-software
-[download oc client cli and the opeshift-installer]
- 
-$ ./openshift-install version
-[check the version of the insatll tool,[!] the version must be the same as the oc client tool]
+```
+mkdir mirror-images
+```
 
-$ dig +noall +answer @<nameserver_ip> api.<cluster_name>.<base_domain> 
-$ dig +noall +answer @<nameserver_ip> console-openshift-console.apps.<cluster_name>.<base_domain>
-$ dig +noall +answer @<nameserver_ip> -x <openshift machines ip>
-[check the DNS resolve for your machines]
+*create variable to use it in the push command, [!] the path must be absolute path*
 
-$ ssh-keygen
-[generate ssh key]
+```
+REMOVABLE_MEDIA_PATH='/root/mirror-images/'
+```
+
+*push the images to your local registry*
+
+```
+oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirror "file://openshift/release:${OCP_RELEASE}*" ${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} 
+```
+
+## INSTALLATION PROCCESS
+
+*check the version of the insatll tool,[!] the version **must** be the same as the oc client tool*
+
+```
+./openshift-install version
+```
+
+*check the DNS resolve for your machines*
+
+```
+dig +noall +answer @<nameserver_ip> api.<cluster_name>.<base_domain> 
+```
+
+```
+dig +noall +answer @<nameserver_ip> console-openshift-console.apps.<cluster_name>.<base_domain>
+```
+
+```
+dig +noall +answer @<nameserver_ip> -x <openshift machines ip>
+```
+
+*generate ssh key*
+
+```
+ssh-keygen
+```
 
 $ cat <path>/<file_name>.pub
 [check the public key]
