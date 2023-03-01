@@ -1,8 +1,13 @@
-- [INSTALLATION PROCCESS](#INSTALLATION-PROCCESS)
+# Contents
+
+- [Red Hat minimal Quay registry](#Red-Hat-minimal-Quay-registry)
+- [Pull OpenShift installation images](#Pull-OpenShift-installation-images)
+- [Push images to the local registry](#Push-images-to-the-local-registry)
+- [Installation proccess](#Installation-proccess)
 
 </br>
 
-# PREREQUISITES - 
+# Prerequisites - 
 
 * This installation required load balancer
  
@@ -88,6 +93,8 @@ vim /etc/haproxy/haproxy.cfg
 ```
 systemctl enable-now haproxy.service
 ```
+
+</br>
 
 # Red Hat minimal Quay registry
 
