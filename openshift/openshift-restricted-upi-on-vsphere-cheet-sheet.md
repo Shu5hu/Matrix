@@ -349,16 +349,6 @@ install oc /usr/local/bin
 oc version
 ```
 
-*downlowd the openshift installer with the same version as the oc client*
-
-https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/$VERSION/x86_64/product-software
-
-*extract the binary files to the designated location*
-
-```
-tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
-```
-
 *create OCP_RELEASE variable with the oc version as value*
 
 ```
@@ -424,6 +414,16 @@ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirro
 </br>
 
 # Installation proccess
+
+*downlowd the openshift installer with the same version as the oc client*
+
+https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/$VERSION/x86_64/product-software
+
+*extract the binary files to the designated location*
+
+```
+tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
+```
 
 *check the version of the insatll tool,[!] the version **must** be the same as the oc client tool*
 
