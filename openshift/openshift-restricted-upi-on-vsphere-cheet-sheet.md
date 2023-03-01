@@ -9,7 +9,7 @@
 
 # Prerequisites - 
 
-* This installation required load balancer
+* [!] This installation required load balancer
  
 ###### Install Load Balancer in case you don't have one allready 
 
