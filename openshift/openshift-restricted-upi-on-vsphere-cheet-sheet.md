@@ -600,11 +600,11 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
         
 ##### ADD THE PARAMETERS ABOVE TO THE ADVANCE CONFIG IN YOUR MACHINE TO LOAD THE MCHINE WITH THE IGNITION FILES
 
-    guestinfo.afterburn.initrd.network-karg <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> </br>
-    guestinfo.ignition.config.data <copy of the ignition file content> </br>
-    guestinfo.ignition.config.data.encoding <base64> </br>
-    disk.EnableUUID <TRUE> </br>
-    stealclock.enable <TRUE> </br>
+    guestinfo.afterburn.initrd.network-karg = <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> 
+    guestinfo.ignition.config.data = <copy of the ignition file content>
+    guestinfo.ignition.config.data.encoding = <base64>
+    disk.EnableUUID  = <TRUE>
+    stealclock.enable = <TRUE>
 
 *copy the kubconfig file to the designated location*
 
