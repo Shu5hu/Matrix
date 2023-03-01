@@ -230,7 +230,7 @@ mkdir /quay
 
 *download oc client cli*
 
-[https://access.redhat.com/downloads/content/](#https://access.redhat.com/downloads/content/290/ver=4.12/rhel---9/4.12/x86_64/product-software)
+[https://access.redhat.com/downloads/content/](https://access.redhat.com/downloads/content/290/ver=4.12/rhel---9/4.12/x86_64/product-software)
 
 *extract the binary files*
 
@@ -417,7 +417,7 @@ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirro
 
 *downlowd the openshift installer with the same version as the oc client*
 
-https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/$VERSION/x86_64/product-software
+[https://access.redhat.com/downloads/content/](https://access.redhat.com/downloads/content/290/ver=4.12/rhel---9/4.12/x86_64/product-software)
 
 *extract the binary files to the designated location*
 
