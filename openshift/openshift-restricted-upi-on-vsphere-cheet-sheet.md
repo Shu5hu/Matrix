@@ -77,6 +77,8 @@ vim /etc/haproxy/haproxy.cfg
    server worker1 worker1.<cluster name.domain name>:80 check inter 1s
   ```
 
+* *vim replace - `:` > `%s/<cluster name.domain name>/<you cluster fqdn>/g`*
+
 *start and enable the service after the config file is ready*
 
 ```
