@@ -441,27 +441,43 @@ dig +noall +answer @<nameserver_ip> -x <openshift machines ip>
 ssh-keygen
 ```
 
-$ cat <path>/<file_name>.pub
-[check the public key]
+*check the public key*
 
-$ eval "$(ssh-agent -s)"
-[start the ssh agent]
+```
+cat <path>/<file_name>.pub
+```
 
-$ ssh-add <path>/<private key>
-[add your praivet key to the ssh agent] 
+*start the ssh agent*
 
+```
+eval "$(ssh-agent -s)"
+```
 
-$ mkdir <installation_directory>
-[create installation directory]
+*add your praivet key to the ssh agent*
 
-$ ./openshift-install create install-config --dir <installation_directory>
-[generate install-config file]
+```
+ssh-add <path>/<private key>
+```
 
+*create installation directory*
+
+```
+mkdir <installation_directory>
+```
+
+*generate install-config file*
+
+```
+./openshift-install create install-config --dir <installation_directory>
+```
+
+*edit the install-config file to fit your needs*
+
+```
 vim install-config.yaml
-[edit the install-config file to fit your needs]
+```
 
-        {
-
+        ```
         apiVersion: v1
         baseDomain: example.com 
         compute: 
@@ -476,11 +492,11 @@ vim install-config.yaml
           name: test 
         platform:
           vsphere:
-            vcenter: your.vcenter.server 
-            username: username 
-            password: password 
-            datacenter: datacenter 
-            defaultDatastore: datastore 
+            vcenter: <your.vcenter.server> 
+            username: <username> 
+            password: <password> 
+            datacenter: <datacenter> 
+            defaultDatastore: <datastore> 
             folder: "/<datacenter_name>/vm/<folder_name>/<subfolder_name>" 
             resourcePool: "/<datacenter_name>/host/<cluster_name>/Resources/<resource_pool_name>" 
             diskType: thin 
@@ -498,52 +514,82 @@ vim install-config.yaml
         - mirrors:
           - <local_registry>/<local_repository_name>/release
           source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+          ```
+          
+*create copy of the install-config file. [!] **VERY IMPORTENT***
 
-        }
+```
+cp <path/install-config.yaml> <path/install-config.yaml.bak>
+```
 
-## [!!] VERY IMPORTENT ##
-$ cp <path/install-config.yaml> <path/install-config.yaml.bak>
-[create copy of the install-config file]
+*generate the mnifests files*
 
-$ ./openshift-install create manifests --dir <installation_directory>
-[generate the mnifests files]
+```
+./openshift-install create manifests --dir <installation_directory>
+```
 
-$ cd <path to install directory>
-[get in the insatll directory]
+*get in the insatll directory*
 
-$ rm -f openshift/99_openshift-cluster-api_master-machines-*.yaml openshift/99_openshift-cluster-api_worker-machineset-*.yaml
-[delete the master and worker yaml files]
+```
+cd <path to install directory>
+```
 
-$ sed 's/true/false/g' manifests/cluster-scheduler-02-config.yml
-[this change parameter to prevent the orcestrator to run pods on the master nodes]
-[change <mastersSchedulable:> parameter to - false]
+*delete the master and worker yaml files*
 
-$ cd <path to the directory with the install script>
-[go back to the directory with the installer tool]
+```
+rm -f openshift/99_openshift-cluster-api_master-machines-*.yaml openshift/99_openshift-cluster-api_worker-machineset-*.yaml
+```
 
-$ ./openshift-install create ignition-configs --dir <installation_directory>
-[generate the ignition files] 
+*change <mastersSchedulable:> parameter to - false. this change parameter to prevent the orcestrator to run pods on the master nodes*
 
-$ base64 -w0 <installation_directory>/master.ign > <installation_directory>/master.64
-$ base64 -w0 <installation_directory>/worker.ign > <installation_directory>/worker.64
-$ base64 -w0 <installation_directory>/bootstrap.ign > <installation_directory>/bootstrap.64
-[convert the ignition files to base64 format]
+```
+sed 's/true/false/g' manifests/cluster-scheduler-02-config.yml
+```
 
-$ jq -r .infraID <installation_directory>/metadata.json 
-[generate inventory name for the cluster in the vsphere and create vsphere directory with this name]
+*go back to the directory with the installer tool*
 
-https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.11/
-[download the rhcos-vmware.x86_64]
+```
+cd <path to the directory with the install script>
+```
 
-## [!!] VERY IMPORTENT ##
-deploy OVF tamplate from your local drive
-## [!!] DO NOT START THE COREOS TEMPLATE ##
+*generate the ignition files*
 
-## CREATE VM'S FROM THE TEMPLATE ##
+```
+./openshift-install create ignition-configs --dir <installation_directory>
+``` 
 
-## MINIMAL REQUIREMENTS ##
+*convert the ignition files to base64 format*
 
-        {
+```
+base64 -w0 <installation_directory>/master.ign > <installation_directory>/master.64
+```
+
+```
+base64 -w0 <installation_directory>/worker.ign > <installation_directory>/worker.64
+```
+
+```
+base64 -w0 <installation_directory>/bootstrap.ign > <installation_directory>/bootstrap.64
+```
+
+*get the inventory name from the infraID file and create directory for the cluster with this name*
+
+```
+jq -r .infraID <installation_directory>/metadata.json 
+```
+
+*download the rhcos-vmware.x86_64. [!] this template depending on your infrastructure*
+
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
+
+*deploy the coreOS template to the cluster directory*
+
+* *[!] **DO NOT START** THE COREOS TEMPLATE.*
+
+##### CREATE VM'S FROM THE TEMPLATE 
+
+*MINIMAL REQUIREMENTS -*
+        
                     CPU   MEMORY    STORAGE
         bootstrap   8     16        120
         master0     8     16        120
@@ -551,16 +597,15 @@ deploy OVF tamplate from your local drive
         master2     8     16        120
         worker0     4     8         100
         worker1     4     8         100
+        
+##### ADD THE PARAMETERS ABOVE TO THE ADVANCE CONFIG IN YOUR MACHINE TO LOAD THE MCHINE WITH THE IGNITION FILES
 
-        }
+  guestinfo.afterburn.initrd.network-karg <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:<hostname>:<nic>:none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]> </br>
+  guestinfo.ignition.config.data <copy of the ignition file content> </br>
+  guestinfo.ignition.config.data.encoding <base64> </br>
+  disk.EnableUUID <TRUE> </br>
+  stealclock.enable <TRUE> </br>
 
-guestinfo.afterburn.initrd.network-karg <[EXAMPLE: ip=<machine ip>::<default gateway>:<prefix>:::none nameserver=<dns server ip1> nameserver=<dns server ip2> ...]>
-guestinfo.ignition.config.data <copy of the ignition file content>
-guestinfo.ignition.config.data.encoding <base64>
-disk.EnableUUID <TRUE>
-stealclock.enable <TRUE>
-
-## ADD THE PARAMETERS ABOVE TO THE ADVANCE CONFIG IN YOUR MACHINE TO LOAD THE MCHINE WITH THE IGNITION FILES ##
 
 
 ## FOR LOSERS - export KUBECONFIG=<installation_directory>/auth/kubeconfig ## 
