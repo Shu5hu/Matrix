@@ -1,11 +1,8 @@
-markdownLinkTest
-================
+#### Jump directly to the installation proccess
 
-# CONTENTS
-
-- [PREREQUISITES](#PREREQUISITES)
 - [INSTALLATION PROCCESS](#INSTALLATION-PROCCESS)
 
+</br>
 
 ## PREREQUISITES - 
 
