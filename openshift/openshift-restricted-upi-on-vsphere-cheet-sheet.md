@@ -301,7 +301,7 @@ REMOVABLE_MEDIA_PATH='/root/mirror-images/'
 oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run
 ```
   
-  ```
+  
   imageContentSources:
   - mirrors:
     - <your.registry.server>:8443/ocp4/openshift4
@@ -309,7 +309,7 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${R
   - mirrors:
     - <your.registry.server>:8443/ocp4/openshift4
     source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
-  ```
+
 
 *pull the images from Red-Hat to the local directory to your local machine*
 
