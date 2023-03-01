@@ -199,7 +199,7 @@ openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateser
 ```
 
 ```
-cp <ca certificate> /etc/pki/ca-trust/source/anchors/
+cp <path/to/ca_certificate> /etc/pki/ca-trust/source/anchors/
 ```
 
 ```
