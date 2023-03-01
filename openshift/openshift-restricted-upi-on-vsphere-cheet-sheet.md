@@ -1,5 +1,3 @@
-*Jump directly to the installation proccess*
-
 - [INSTALLATION PROCCESS](#INSTALLATION-PROCCESS)
 
 </br>
