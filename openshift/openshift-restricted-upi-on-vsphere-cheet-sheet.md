@@ -204,7 +204,7 @@ mkdir /quay
 *run the mirror registry installation with the server self-signed certificate*
 
 ```
-./mirror-registry install --quayHostname [server fqdn] --quayRoot [registry directory] --sslCert [server certificate] --sslKey [server key]
+./mirror-registry install --quayHostname <SERVER_FQDN> --quayRoot <REGISTRY_DIRECTORY_PATH> --sslCert <SERVER_CERTIFICATE> --sslKey <SERVER_KEY>
 ```
 
 * *[!] THE INSTALLATION WILL GENERATE LOGIN CREDENTIAL FOR THE MIRROR-REGISTRY, **KEEP THEM***
@@ -219,12 +219,12 @@ mkdir /quay
 
 *download oc client cli*
 
-https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/4.11.22/x86_64/product-software
+https://access.redhat.com/downloads/content/290/ver=4.11/rhel---8/$VERSION/x86_64/product-software
 
 *extract the binary files*
 
 ```
-tar -xvzf oc-4.11.18-linux.tar.gz .
+tar -xvzf oc-<VERSION>-linux.tar.gz .
 ```
 
 *install oc client*
@@ -319,14 +319,18 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/m
 
 ## COPY THE DIRECTORY WITH THE IMAGES YOU HAVE BEEN CREATED BEFORE FROM THE CONNECTED NETWORK TO YOUR LAN 
 
+#### 
 
-$ echo $PATH
-[print the bianry files location on your server]
+##### BRING THE OC CLIENT CLI FROM THE CONNECTED SERVER
 
-$ tar -xvzf oc-4.11.18-linux.tar.gz -C <binary directory from the $PATH variable>
-[extract the binary files to the designated location]
+*extract the binary files to the designated location*
 
-$ tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
+```
+tar -xvzf oc-<VERSION>-linux.tar.gz -C <binary directory from the $PATH variable>
+```
+
+
+tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
 [extract the openshift installation tool to the install location]
 
 $ oc version
