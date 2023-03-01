@@ -611,7 +611,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 ```
 cp install-config/auth/kubeconfig .kube/config
 ```
-***FOR LOSERS** - export KUBECONFIG=<installation_directory>/auth/kubeconfig*
+***FOR LOSERS** - `export KUBECONFIG=<installation_directory>/auth/kubeconfig`*
 
 *search for nodes request*
 
