@@ -253,7 +253,7 @@ oc version
 *create OCP_RELEASE variable with the oc version as value*
 
 ```
-OCP_RELEASE=[client version from the `oc version` stdout]
+OCP_RELEASE=<client version from the `oc version` stdout>
 ```
 
 *download your pull-secret*
@@ -263,7 +263,7 @@ https://console.redhat.com/openshift/install/pull-secret
 *convert your pull-secret file to JSON format*
 
 ```
-cat ./pull-secret.txt | jq . > /root/pull-secret.json
+cat ./pull-secret.txt | jq . > ~/pull-secret.json
 ```
 
 *create variables to pull the relevent images for the installation*
@@ -301,7 +301,7 @@ mkdir mirror-images
 *create variable to use it in the pull command, [!] **the path must be absolute path***
 
 ```
-REMOVABLE_MEDIA_PATH='/root/mirror-images/'
+REMOVABLE_MEDIA_PATH='/path/to/mirror-images/'
 ```
 
 *dry run the pull command to generate the imageContentSources from the output, use it later in the install-config file*
@@ -364,7 +364,7 @@ podman login -u init -p <PASSWORD>
 *create pull-scret with with the credentials of your registry*
 
 ```
-cat $XDG_RUNTIME_DIR/containers/auth.json > /root/pull-secret.json
+cat $XDG_RUNTIME_DIR/containers/auth.json > ~/pull-secret.json
 ```
 
 *create variables to push the relevant images to your registry for the installtion*
@@ -402,7 +402,7 @@ mkdir mirror-images
 *create variable to use it in the push command, [!] the path must be absolute path*
 
 ```
-REMOVABLE_MEDIA_PATH='/root/mirror-images/'
+REMOVABLE_MEDIA_PATH='/path/to/mirror-images/'
 ```
 
 *push the images to your local registry*
@@ -527,7 +527,7 @@ vim install-config.yaml
 *create copy of the install-config file. [!] **VERY IMPORTENT***
 
 ```
-cp <path/install-config.yaml> <path/install-config.yaml.bak>
+cp </path/to/install-config.yaml> <install-config.yaml.bak>
 ```
 
 *generate the mnifests files*
