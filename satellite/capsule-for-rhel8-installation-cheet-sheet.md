@@ -1,3 +1,5 @@
+# Serve configuration
+
 ###### Generate register command to satellite server
 
 	in the Satellite web UI, navigate to Hosts > Register Host.
@@ -46,42 +48,110 @@ yum install satellite-capsule chrony -y
 systemctl enable --now chronyd
 ```
 
+# Steps on satellite server
+
+###### Create capsule server certificate
+
+*Create directory for the certificates*
+
+```
+mkdir ~/capsule_cert
+```
+
+*Create praivte key*
+
+```
+openssl genrsa -out /root/capsule_cert/capsule_cert_key.pem 4096
+```
+
+*Create config file*
+
+```
+vi ~/capsule_cert/openssl.cnf
+```
+
+	```
+	[ req ]
+	distinguished_name  = req_distinguished_name
+	policy              = policy_anything
+	x509_extensions     = usr_cert
+	req_extensions      = v3_req
+
+	[ req_distinguished_name ]
+	commonName                      = Common Name (eg, your name or your server hostname)
+
+	[ usr_cert ]
+	subjectKeyIdentifier    = hash
+	authorityKeyIdentifier  = keyid,issuer
+	basicConstraints        = CA:FALSE
+	extendedKeyUsage        = serverAuth
+	keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+	subjectAltName          = @alt_names
+
+	[ v3_req ]
+	basicConstraints        = CA:FALSE
+	extendedKeyUsage        = serverAuth
+	keyUsage                = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+	subjectAltName          = @alt_names
+
+	[ alt_names ]
+	DNS.1 = your.server.com
+	```
 
 
-steps on the satellite server -
+*Generate the Certificate Signing Request*
 
-[!] execute procedure - capsule-custom-certificate-cheet-sheet
+```
+openssl req -new -key ~/capsule_cert/capsule_cert_key.pem -config ~/capsule_cert/openssl.cnf -out ~/capsule_cert/capsule_cert_csr.pem
+```
 
-export CAPSULE={{ capsule_fqdn }}
-echo $CAPSULE
+*sign on the capsule certificate with the same CA as the satellite server*
 
-[!] examples:
+```
+openssl x509 -req -days 365 -in ~/capsule_cert/capsule_cert_csr.pem -CA ~/satellite_cert/ca/ca.crt -CAkey ~/satellite_cert/ca/ca.key -CAcreateserial -out ~/capsule_cert/capsule.crt -extensions usr_cert -extfile ~/capsule_cert/openssl.cnf
+```
 
-capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
+*generate capsule certificate command*
+
+```
+katello-certs-check -t capsule -c ~/capsule_cert/capsule.crt -k ~/capsule_cert/capsule_cert_key.pem -b ~/satellite_cert/ca/ca.crt
+```
+
+*Create environment variable with the capsule server fqdn*
+
+```
+export CAPSULE=<CAPSULE_FQDN>
+```
+
+* *Example:*
+
+				capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
                                    --certs-tar  "~/$CAPSULE-certs.tar" \
                                    --server-cert "/root/capsule_cert/capsule.crt" \
                                    --server-key "/root/capsule_cert/capsule_cert_key.pem" \
                                    --server-ca-cert "/root/satellite_cert/ca/ca.crt"
+			
+* *This command will generate capsule server install procedure, [!] follow this procedure to start installation*
 								 
+* *Example:*
 
+  	To finish the installation, follow these steps:
 
-  To finish the installation, follow these steps:
+ 	 If you do not have the Capsule registered to the Satellite instance, then please do the following:
 
-  If you do not have the Capsule registered to the Satellite instance, then please do the following:
+ 	 1. yum -y localinstall http://satellite01.redhat.local/pub/katello-ca-consumer-latest.noarch.rpm
+ 	 2. subscription-manager register --org "Matrix"
 
-  1. yum -y localinstall http://satellite01.redhat.local/pub/katello-ca-consumer-latest.noarch.rpm
-  2. subscription-manager register --org "Matrix"
+  	Once this is completed run the steps below to start the Capsule installation:
 
-  Once this is completed run the steps below to start the Capsule installation:
+ 	 1. Ensure that the satellite-capsule package is installed on the system.
+ 	 2. Copy the following file ~/<capsule_fqdn>-certs.tar to the system <capsule_fqdn> at the following location ~/<capsule_fqdn>-certs.tar
+ 	 scp ~/<capsule_fqdn>-certs.tar root@<capsule_fqdn>:~/<capsule_fqdn>-certs.tar
+ 	 3. Run the following commands on the Capsule (possibly with the customized
+  	 	parameters, see satellite-installer --scenario capsule --help and
+    	 	documentation for more info on setting up additional services):
 
-  1. Ensure that the satellite-capsule package is installed on the system.
-  2. Copy the following file /root/capsule01.redhat.local-certs.tar to the system capsule01.redhat.local at the following location /root/capsule01.redhat.local-certs.tar
-  scp /root/capsule01.redhat.local-certs.tar root@capsule01.redhat.local:/root/capsule01.redhat.local-certs.tar
-  3. Run the following commands on the Capsule (possibly with the customized
-     parameters, see satellite-installer --scenario capsule --help and
-     documentation for more info on setting up additional services):
-
-  satellite-installer \
+  	 satellite-installer \
                     --scenario capsule \
                     --certs-tar-file                              "/root/capsule01.redhat.local-certs.tar"\
                     --foreman-proxy-register-in-foreman           "true"\
@@ -91,6 +161,19 @@ capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
                     --foreman-proxy-oauth-consumer-key            "eEdQtvXmNKgEVL8vvfDTyMAFH2BFiDtA"\
                     --foreman-proxy-oauth-consumer-secret         "htVdXYthUoKvTRScJ92xdUXdTRvnx7rp"
 		    
-		   
-Content sync log - /var/log/httpd/forman-ssl_access_ssl.log		   
+*Copy the .tar file to your capsule server*
+
+```
+scp ~/<capsule_fqdn>-certs.tar root@<capsule_fqdn>:~/<capsule_fqdn>-certs.tar
+```
+
+# Steps on capsule server
+
+###### Run the installation command
+
+*After installation complete you need to sync your content to the capsule server, here you can find the sync logs*
+
+```
+tail -f /var/log/httpd/forman-ssl_access_ssl.log	
+```
 
