@@ -125,11 +125,13 @@ export CAPSULE=<CAPSULE_FQDN>
 
 * *Example:*
 
-				capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
-                                   --certs-tar  "~/$CAPSULE-certs.tar" \
-                                   --server-cert "/root/capsule_cert/capsule.crt" \
-                                   --server-key "/root/capsule_cert/capsule_cert_key.pem" \
-                                   --server-ca-cert "/root/satellite_cert/ca/ca.crt"
+```
+capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
+        --certs-tar  "~/$CAPSULE-certs.tar" \
+        --server-cert "/root/capsule_cert/capsule.crt" \
+        --server-key "/root/capsule_cert/capsule_cert_key.pem" \
+        --server-ca-cert "/root/satellite_cert/ca/ca.crt"
+```
 			
 * *This command will generate capsule server install procedure, [!] follow this procedure to start installation*
 								 
