@@ -1,50 +1,58 @@
-#
-
-### prerequisites - 
+# Prerequisites 
 
 ```
 ping -c1 $(hostname -f)
 ```
+
 ```
 subscription-manager register
 ```
+
 ```
 subscription-manager list --all --available --matches 'Red Hat Satellite'
 ```
+
 ```
 subscription-manager attach --pool=<pool_id>
 ```
+
 ```
 subscription-manager list --consumed
 ```
+
 ```
 subscription-manager repos --disable "*"
 ```
+
 ```
 subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
 ```
+
 ```
 yum repolist
 ```
+
 ```
 dnf module enable satellite:el8
 ```
+
 ```
 yum update -y
 ```
+
 ```
 yum install satellite -y 
 ```
+
 ```
 yum install chrony sos createrepo_c tmux -y
 ```
+
 ```
 systemctl enable --now chronyd
 ```
 
-#
-
-###### *In case you use tmux*
+###### In case you use tmux
 
 ```
 tmux
@@ -60,57 +68,58 @@ tmux
 
 &nbsp;
 
-## Install Satellite server -
+# Install Satellite server 
 
 ```
 satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
 ```
 
-&nbsp;
-
-#
-
-##### Import manifest -
+*Import manifest*
 
 ```
 hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
 ```
 
-##### Register hosts -
+*Register hosts*
 
 ```
 curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<satellite_fqdn>/pub/katello-ca-consumer-latest.noarch.rpm
 ```
+
 ```
 yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 ```
 
-##### Configuring Satellite Server with an HTTP Proxy -
+*Configuring Satellite Server with an HTTP Proxy*
 
 ```
 hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
 ```
-* ###### *OPTIONAL: --username=<proxy_username> --password=<proxy_password>*
+
+* *Optional: `--username=<proxy_username> --password=<proxy_password>`*
+
 ```
 hammer settings set --name=content_default_http_proxy --value=<my_proxy>
 ```
 
-#
-
-##### Satellite-maintain commands - 
+# Satellite-maintain commands - 
 
 ```
 satellite-maintain service status
 ```
+
 ```
 hammer ping
 ```
+
 ```
 satellite-maintain service restart
 ```
+
 ```
 foreman-maintain packages install <package name>
 ```
+
 ```
 satellite-maintain packages unlock
 ```
