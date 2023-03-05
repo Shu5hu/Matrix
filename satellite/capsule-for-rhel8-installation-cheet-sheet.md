@@ -134,7 +134,8 @@ export CAPSULE=<CAPSULE_FQDN>
 * *This command will generate capsule server install procedure, [!] follow this procedure to start installation*
 								 
 * *Example:*
-
+        
+	```
   	To finish the installation, follow these steps:
 
  	 If you do not have the Capsule registered to the Satellite instance, then please do the following:
@@ -160,7 +161,8 @@ export CAPSULE=<CAPSULE_FQDN>
                     --foreman-proxy-trusted-hosts                 "capsule01.redhat.local"\
                     --foreman-proxy-oauth-consumer-key            "eEdQtvXmNKgEVL8vvfDTyMAFH2BFiDtA"\
                     --foreman-proxy-oauth-consumer-secret         "htVdXYthUoKvTRScJ92xdUXdTRvnx7rp"
-		    
+	 ```
+	 
 *Copy the .tar file to your capsule server*
 
 ```
