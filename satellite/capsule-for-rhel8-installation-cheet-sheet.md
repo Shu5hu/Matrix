@@ -1,35 +1,52 @@
+###### Generate register command to satellite server
 
+	in the Satellite web UI, navigate to Hosts > Register Host.
+	Click Generate to create the registration command.
+	Click on the files icon to copy the command to your clipboard.
+	Log on to the host you want register and run the previously generated command.
+	Update subscription manager configuration for rhsm.baseurl and server.hostname:
 
-firewall-cmd --add-port="5646/tcp"
-firewall-cmd --runtime-to-permanent
+###### Regster to satellite with kattelo agent
 
-firewall-cmd --add-port="53/udp" --add-port="53/tcp" --add-port="67/udp" --add-port="69/udp" --add-port="80/tcp" --add-port="443/tcp" --add-port="5647/tcp" --add-port="8140/tcp" --add-port="8443/tcp" --add-port="8000/tcp" --add-port="9090/tcp"
-firewall-cmd --runtime-to-permanent
-firewall-cmd --list-all
+```
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<SATELLITE_FQDN>/pub/katello-ca-consumer-latest.noarch.rpm
+```
 
-
-In the Satellite web UI, navigate to Hosts > Register Host.
-Click Generate to create the registration command.
-Click on the files icon to copy the command to your clipboard.
-Log on to the host you want register and run the previously generated command.
-Update subscription manager configuration for rhsm.baseurl and server.hostname:
-
-curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://{{ satellite_fqdn }}/pub/katello-ca-consumer-latest.noarch.rpm
+```
 yum localinstall -y katello-ca-consumer-latest.noarch.rpm
-subscription-manager config --rhsm.baseurl=https://{{ satellite_fqdn }}/pulp/content --server.hostname={{ satellite_fqdn }}
+```
 
-[!]Check the /etc/yum.repos.d/redhat.repo file and ensure that the appropriate repositories have been enabled.
+```
+subscription-manager config --rhsm.baseurl=https://<SATELLITE_FQDN>/pulp/content --server.hostname=<SATELLITE_FQDN>
+```
 
+* *[!] Check the /etc/yum.repos.d/redhat.repo file and ensure that the appropriate repositories have been enabled.*
+
+```
 subscription-manager repos --disable "*"
-subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-capsule-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
-dnf module enable satellite-capsule:el8
-yum update -y
-yum install satellite-capsule -y
-yum install chrony -y
-systemctl start chronyd
-systemctl enable chronyd
+```
 
-###
+```
+subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-capsule-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
+```
+
+```
+dnf module enable satellite-capsule:el8
+```
+
+```
+yum update -y
+```
+
+```
+yum install satellite-capsule chrony -y
+```
+
+```
+systemctl enable --now chronyd
+```
+
+
 
 steps on the satellite server -
 
