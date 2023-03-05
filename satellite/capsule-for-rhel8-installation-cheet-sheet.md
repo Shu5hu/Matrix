@@ -173,7 +173,7 @@ scp ~/<capsule_fqdn>-certs.tar root@<capsule_fqdn>:~/<capsule_fqdn>-certs.tar
 
 # Steps on capsule server
 
-###### Run the installation command
+#### Run the installation command
 
 *After installation complete you need to sync your content to the capsule server, here you can find the sync logs*
 
