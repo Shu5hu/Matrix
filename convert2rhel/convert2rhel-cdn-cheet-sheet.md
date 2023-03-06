@@ -1,19 +1,19 @@
 # Variables
 
 ```
-export MAJOR_VERSION=<os_major_version>
+MAJOR_VERSION=<os_major_version>
 ```
 
 ```
-export REDHAT_USERNAME=<redhat_username>
+REDHAT_USERNAME=<redhat_username>
 ```
 
 ```
-export REDHAT_PASSWORD=<redhat_password>
+REDHAT_PASSWORD=<redhat_password>
 ```
 
 ```
-export POOL_ID=<pool id of your subscription>
+POOL_ID=<pool id of your subscription>
 ```
 
 # Convertion proccess
