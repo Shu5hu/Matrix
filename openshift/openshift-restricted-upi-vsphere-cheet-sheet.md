@@ -215,7 +215,7 @@ mkdir /quay
 *run the mirror registry installation with the server self-signed certificate*
 
 ```
-./mirror-registry install --quayHostname <SERVER_FQDN> --quayRoot <REGISTRY_DIRECTORY_PATH> --sslCert <SERVER_CERTIFICATE> --sslKey <SERVER_KEY>
+./mirror-registry install --quayHostname <server_fqdn> --quayRoot /quay/ --sslCert </path/to/server_cert> --sslKey </path/to/server_key>
 ```
 
 * *[!] The installation will generate login credentials for the mirror-registry, **KEEP THEM***
@@ -358,7 +358,7 @@ OCP_RELEASE=<client version from the `oc version` stdout>
 *login to your registry*
 
 ```
-podman login -u init -p <PASSWORD>
+podman login -u init -p <password>
 ```
 
 *create pull-scret with with the credentials of your registry*
@@ -422,7 +422,7 @@ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirro
 *extract the binary files to the designated location*
 
 ```
-tar -xvzf tar/openshift-install-linux.tar.gz -C <install directory>
+tar -xvzf tar/openshift-install-linux.tar.gz
 ```
 
 *check the version of the insatll tool,[!] the version **must** be the same as the oc client tool*
@@ -475,10 +475,16 @@ ssh-add <path>/<private key>
 mkdir <installation_directory>
 ```
 
+*create variable for the installation directory*
+
+```
+export INSTALL_DIR=</path/to/installation_directory>
+```
+
 *generate install-config file*
 
 ```
-./openshift-install create install-config --dir <installation_directory>
+./openshift-install create install-config --dir ${INSTALL_DIR}
 ```
 
 *edit the install-config file to fit your needs*
@@ -533,13 +539,13 @@ cp </path/to/install-config.yaml> <install-config.yaml.bak>
 *generate the mnifests files*
 
 ```
-./openshift-install create manifests --dir <installation_directory>
+./openshift-install create manifests --dir ${INSTALL_DIR}
 ```
 
 *get in the insatll directory*
 
 ```
-cd <path to install directory>
+cd ${INSTALL_DIR}
 ```
 
 *delete the master and worker yaml files*
@@ -563,27 +569,27 @@ cd <path to the directory with the install script>
 *generate the ignition files*
 
 ```
-./openshift-install create ignition-configs --dir <installation_directory>
+./openshift-install create ignition-configs --dir ${INSTALL_DIR}
 ``` 
 
 *convert the ignition files to base64 format*
 
 ```
-base64 -w0 <installation_directory>/master.ign > <installation_directory>/master.64
+base64 -w0 ${INSTALL_DIR}/master.ign > ${INSTALL_DIR}/master.64
 ```
 
 ```
-base64 -w0 <installation_directory>/worker.ign > <installation_directory>/worker.64
+base64 -w0 ${INSTALL_DIR}/worker.ign > ${INSTALL_DIR}/worker.64
 ```
 
 ```
-base64 -w0 <installation_directory>/bootstrap.ign > <installation_directory>/bootstrap.64
+base64 -w0 ${INSTALL_DIR}/bootstrap.ign > ${INSTALL_DIR}/bootstrap.64
 ```
 
 *get the inventory name from the infraID file and create directory for the cluster with this name*
 
 ```
-jq -r .infraID <installation_directory>/metadata.json 
+jq -r .infraID ${INSTALL_DIR}/metadata.json 
 ```
 
 *download the rhcos-vmware.x86_64. [!] this template depending on your infrastructure*
@@ -617,7 +623,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 *run the bootstrap complete command before workers created*
 
 ```
-./openshift-install wait-for bootstrap-complete --dir <installation directory> --log-level debug
+./openshift-install wait-for bootstrap-complete --dir ${INSTALL_DIR} --log-level debug
 ```
 
 *copy the kubconfig file to the designated location*
@@ -625,7 +631,7 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 ```
 cp <installation directory>/auth/kubeconfig .kube/config
 ```
-***For Losers** - `export KUBECONFIG=<installation_directory>/auth/kubeconfig`*
+***For Losers** - `export KUBECONFIG=${INSTALL_DIR}/auth/kubeconfig`*
 
 *search for nodes request*
 
@@ -644,7 +650,7 @@ oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificat
 *run this command to wait and pray for the installation tp complete successfully*
 
 ```
-./openshift-install wait-for install-complete --dir <installation directory> --log-level=debug
+./openshift-install wait-for install-complete --dir ${INSTALL_DIR} --log-level=debug
 ```
 
 * Optional:
