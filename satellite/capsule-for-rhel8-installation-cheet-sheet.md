@@ -1,11 +1,11 @@
 # Variables
 
 ```
-export SATELLITE_FQDN=<satellite_full_hostname>
+SATELLITE_FQDN=<satellite_full_hostname>
 ```
 
 ```
-export CAPSULE_FQDN=<capsule_full_hostname>
+CAPSULE_FQDN=<capsule_full_hostname>
 ```
 
 # Serve configuration
