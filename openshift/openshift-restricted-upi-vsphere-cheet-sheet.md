@@ -235,7 +235,7 @@ mkdir /quay
 *extract the binary files*
 
 ```
-tar -xvzf oc-<VERSION>-linux.tar.gz .
+tar -xvzf oc-<version>-linux.tar.gz .
 ```
 
 *install oc client*
@@ -334,7 +334,7 @@ oc adm release mirror -a ${LOCAL_SECRET_JSON} --to-dir=${REMOVABLE_MEDIA_PATH}/m
 * *Bring the OC cleint from the connected server*
 
 ```
-tar -xvzf oc-<VERSION>-linux.tar.gz .
+tar -xvzf oc-<version>-linux.tar.gz .
 ```
 
 *install oc client*
