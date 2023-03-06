@@ -620,16 +620,10 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 ./openshift-install wait-for bootstrap-complete --dir <installation directory> --log-level debug
 ```
 
-*after the bootstrap finished successfully you can create worker nodes and run the install complete command*
-
-```
-./openshift-install wait-for install-complete --dir <installation directory> --log-level debug
-```
-
 *copy the kubconfig file to the designated location*
 
 ```
-cp install-config/auth/kubeconfig .kube/config
+cp <installation directory>/auth/kubeconfig .kube/config
 ```
 ***For Losers** - `export KUBECONFIG=<installation_directory>/auth/kubeconfig`*
 
@@ -650,7 +644,7 @@ oc get csr |grep -i pending |awk '{print $1}' |while read x;do oc adm certificat
 *run this command to wait and pray for the installation tp complete successfully*
 
 ```
-./openshift-install wait-for install-complete --dir install-config/ --log-level=debug
+./openshift-install wait-for install-complete --dir <installation directory> --log-level=debug
 ```
 
 * Optional:
