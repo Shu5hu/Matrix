@@ -5,7 +5,7 @@ export ORGANIZATION_ID=<organization_name>
 ```
 
 ```
-export LOCATION=<yout_location>
+export LOCATION=<your_location>
 ```
 
 ```
