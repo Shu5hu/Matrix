@@ -1,35 +1,35 @@
 # Variables
 
 ```
-export ORGANIZATION_ID=<organization_name>
+ORGANIZATION_ID=<organization_name>
 ```
 
 ```
-export LOCATION=<your_location>
+LOCATION=<your_location>
 ```
 
 ```
-export ADMIN_USERNAME=<satellite_admin_user>
+ADMIN_USERNAME=<satellite_admin_user>
 ```
 
 ```
-export ADMIN_PASSWORD=<satellite_admin_password>
+ADMIN_PASSWORD=<satellite_admin_password>
 ```
 
 ```
-export MANIFEST_FILE=</path/to/manifest_file.zip>
+MANIFEST_FILE=</path/to/manifest_file.zip>
 ```
 
 ```
-export PROXY_NAME=<name_for_proxy_connection>
+PROXY_NAME=<name_for_proxy_connection>
 ```
 
 ```
-export PROXY_URL=<http://myproxy.example.com:port>
+PROXY_URL=<http://myproxy.example.com:port>
 ```
 
 ```
-export SATELLITE_FQDN=<satellite_hostname.your.domain>
+SATELLITE_FQDN=<satellite_hostname.your.domain>
 ```
 
 
