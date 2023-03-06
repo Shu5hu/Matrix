@@ -2,7 +2,7 @@ MAJOR_VERSION: <os major version>
 
 # IN CASE YOU USE SATELLITE SERVER
 
-SATELLITE_SERVER: <satellite server fqdn>
+SATELLITE_FQDN: <satellite server fqdn>
 ORGANIZATION_ID: <organization name from satellite server>
 ACTIVATION_KEY: <activation key to the os content>
 
