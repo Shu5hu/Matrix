@@ -1,3 +1,16 @@
+# variables
+
+```
+ORGANIZATION_ID=<organization_name>
+LOCATION=<yout_location>
+ADMIN_USERNAME=<satellite_admin_user>
+ADMIN_PASSWORD=<satellite_admin_password>
+SATELLITE_FQDN=<satellite_hostname.your.domain>
+MANIFEST_FILE=</path/to/manifest_file.zip>
+PROXY_NAME=<name_for_proxy_connection>
+PROXY_URL=<http://myproxy.example.com:port>
+```
+
 # Prerequisites 
 
 ```
@@ -71,19 +84,19 @@ tmux
 # Install Satellite server 
 
 ```
-satellite-installer --scenario satellite --foreman-initial-organization <My_Organization> --foreman-initial-location <My_Location> --foreman-initial-admin-username <admin_user_name> --foreman-initial-admin-password <admin_password>
+satellite-installer --scenario satellite --foreman-initial-organization ${ORGANIZATION_ID} --foreman-initial-location ${LOCATION} --foreman-initial-admin-username ${ADMIN_USERNAME} --foreman-initial-admin-password ${ADMIN_PASSWORD}
 ```
 
 *Import manifest*
 
 ```
-hammer subscription upload --file ~/<manifest_file.zip> --organization <My_Organization>
+hammer subscription upload --file ${MANIFEST_FILE} --organization ${ORGANIZATION_ID}
 ```
 
 *Register hosts*
 
 ```
-curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<satellite_fqdn>/pub/katello-ca-consumer-latest.noarch.rpm
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
 ```
 
 ```
@@ -93,13 +106,13 @@ yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 *Configuring Satellite Server with an HTTP Proxy*
 
 ```
-hammer http-proxy create --name=<myproxy> --url http://<myproxy.example.com:8080>
+hammer http-proxy create --name=${PROXY_NAME} --url=${PROXY_URL}
 ```
 
 * *Optional: `--username=<proxy_username> --password=<proxy_password>`*
 
 ```
-hammer settings set --name=content_default_http_proxy --value=<my_proxy>
+hammer settings set --name=content_default_http_proxy --value=${PROXY_NAME}
 ```
 
 # Satellite maintain commands
