@@ -215,12 +215,12 @@ mkdir /quay
 *run the mirror registry installation with the server self-signed certificate*
 
 ```
-./mirror-registry install --quayHostname <server_fqdn> --quayRoot /quay/ --sslCert </path/to/server_cert> --sslKey </path/to/server_key>
+./mirror-registry install --quayHostname $(hostname -f) --quayRoot /quay/ --sslCert </path/to/server_cert> --sslKey </path/to/server_key>
 ```
 
 * *[!] The installation will generate login credentials for the mirror-registry, **KEEP THEM***
 
-  *`EXAMPLE: { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g }`*
+  *`Example: { init, 6Ioty2XCw3H0Tk1549qpfsB7DlGRVj8g }`*
 
 </br>
 
