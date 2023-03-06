@@ -56,7 +56,7 @@ curl -o /etc/yum.repos.d/convert2rhel.repo https://ftp.redhat.com/redhat/convert
 
 *DEBUG: `cat /etc/yum.repos.d/convert2rhel.repo`*
 
-> *EXAMPLE:*
+> *Example:*
 >  ```
 >  [convert2rhel-for-rhel-7-rpms]
 >  name=Convert2RHEL for OS 7
