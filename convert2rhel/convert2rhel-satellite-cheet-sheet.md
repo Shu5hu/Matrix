@@ -98,3 +98,7 @@ chmod 0600 activiation_key.ini
 ```
 convert2rhel --org ${ORGANIZATION_ID} --config-file activiation_key.ini
 ```
+
+```
+reboot
+```
