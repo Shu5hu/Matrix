@@ -114,16 +114,6 @@ satellite-installer --scenario satellite --foreman-initial-organization ${ORGANI
 hammer subscription upload --file ${MANIFEST_FILE} --organization ${ORGANIZATION_ID}
 ```
 
-*Register hosts*
-
-```
-curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
-```
-
-```
-yum localinstall -y katello-ca-consumer-latest.noarch.rpm
-```
-
 *Configuring Satellite Server with an HTTP Proxy*
 
 ```
@@ -138,21 +128,43 @@ hammer settings set --name=content_default_http_proxy --value=${PROXY_NAME}
 
 # Satellite maintain commands
 
+*Download kattelo CA*
+
+```
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
+```
+
+*Install kettelo CA on the host*
+
+```
+yum localinstall -y katello-ca-consumer-latest.noarch.rpm
+```
+
+*Check status of satellite services*
+
 ```
 satellite-maintain service status
 ```
+
+*Check satellite connectivity*
 
 ```
 hammer ping
 ```
 
+*Restart all satellite services*
+
 ```
 satellite-maintain service restart
 ```
 
+*Install packeges with foreman*
+
 ```
 foreman-maintain packages install <package name>
 ```
+
+*Disable foreman installer, use this command to yum instead foreman*
 
 ```
 satellite-maintain packages unlock
