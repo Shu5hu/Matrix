@@ -614,6 +614,18 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
     disk.EnableUUID  = TRUE
     stealclock.enable = TRUE
 
+*run the bootstrap complete command before workers created*
+
+```
+./openshift-install wait-for bootstrap-complete --dir <installation directory> --log-level debug
+```
+
+*after the bootstrap finished successfully you can create worker nodes and run the install complete command*
+
+```
+./openshift-install wait-for install-complete --dir <installation directory> --log-level debug
+```
+
 *copy the kubconfig file to the designated location*
 
 ```
