@@ -33,7 +33,7 @@
     state: present
       
 - name: Run the conversion
-  shell: "convert2rhel --username {{ USERNAME }} --password {{ PASSWORD }} --pool {{ POOL_ID }} -y"
+  shell: "convert2rhel --username {{ REDHAT_USERNAME }} --password {{ REDHAT_PASSWORD }} --pool {{ POOL_ID }} -y"
   register: CONVERT
 
 - name: Reboot the system
