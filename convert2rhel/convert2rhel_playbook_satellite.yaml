@@ -29,7 +29,7 @@
     - { FILE: 'https://www.redhat.com/security/data/fd431d51.txt', PATH: '/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release' }
     - { FILE: 'https://ftp.redhat.com/redhat/convert2rhel/redhat-uep.pem', PATH: '/etc/rhsm/ca/redhat-uep.pem' }
     - { FILE: 'https://ftp.redhat.com/redhat/convert2rhel/{{ MAJOR_VERSION }}/convert2rhel.repo', PATH: '/etc/yum.repos.d/convert2rhel.repo' }
-    - { FILE: 'https://{{ SATELLITE_SERVER }}/pub/katello-ca-consumer-latest.noarch.rpm', PATH: '/usr/share/convert2rhel/subscription-manager/katello-ca-consumer-latest.noarch.rpm' }
+    - { FILE: 'https://{{ SATELLITE_FQDN }}/pub/katello-ca-consumer-latest.noarch.rpm', PATH: '/usr/share/convert2rhel/subscription-manager/katello-ca-consumer-latest.noarch.rpm' }
 
 - name: Install convert2rhel tool
   yum:
