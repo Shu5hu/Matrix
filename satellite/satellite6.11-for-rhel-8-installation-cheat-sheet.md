@@ -1,13 +1,34 @@
-# variables
+# Variables
 
 ```
 ORGANIZATION_ID=<organization_name>
+```
+
+```
 LOCATION=<yout_location>
+```
+
+```
 ADMIN_USERNAME=<satellite_admin_user>
+```
+
+```
 ADMIN_PASSWORD=<satellite_admin_password>
+```
+
+```
 SATELLITE_FQDN=<satellite_hostname.your.domain>
+```
+
+```
 MANIFEST_FILE=</path/to/manifest_file.zip>
+```
+
+```
 PROXY_NAME=<name_for_proxy_connection>
+```
+
+```
 PROXY_URL=<http://myproxy.example.com:port>
 ```
 
