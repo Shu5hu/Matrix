@@ -1,19 +1,19 @@
 # Variables
 
 ```
-export MAJOR_VERSION=<os_major_version>
+MAJOR_VERSION=<os_major_version>
 ```
 
 ```
-export SATELLITE_FQDN=<satellite_full_hostname>
+SATELLITE_FQDN=<satellite_full_hostname>
 ```
 
 ```
-export ACTIVATION_KEY=<activation_key>
+ACTIVATION_KEY=<activation_key>
 ```
 
 ```
-export ORGANIZATION_ID=<organization_name>
+ORGANIZATION_ID=<organization_name>
 ```
 
 # Convertion proccess
