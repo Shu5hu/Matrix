@@ -1,6 +1,10 @@
 # Variables
 
 ```
+export MAJOR_VERSION=<os_major_version>
+```
+
+```
 export REDHAT_USERNAME=<redhat_username>
 ```
 
@@ -75,4 +79,8 @@ convert2rhel -h
 
 ```
 convert2rhel --username {{ REDHAT_USERNAME }} --password {{ REDHAT_PASSWORD }} --pool {{ POOL_ID }}
+```
+
+```
+reboot
 ```
