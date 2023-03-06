@@ -599,12 +599,12 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/
 *Minimal requirements -*
         
                     CPU   MEMORY    STORAGE
-        bootstrap   8     16        120
-        master0     8     16        120
-        master1     8     16        120
-        master2     8     16        120
-        worker0     4     8         100
-        worker1     4     8         100
+        bootstrap   4     16        100
+        master0     4     16        100
+        master1     4     16        100
+        master2     4     16        100
+        worker0     2     8         100
+        worker1     2     8         100
         
 ###### Add the parameters above to the advance config in your machine to load the machine with the ignition files
 
