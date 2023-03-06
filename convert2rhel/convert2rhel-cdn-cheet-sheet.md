@@ -74,5 +74,5 @@ convert2rhel -h
 #
 
 ```
-convert2rhel -- 
+convert2rhel --username {{ REDHAT_USERNAME }} --password {{ REDHAT_PASSWORD }} --pool {{ POOL_ID }}
 ```
