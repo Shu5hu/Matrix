@@ -1,3 +1,13 @@
+# Variables
+
+```
+SATELLITE_FQDN=<satellite_full_hostname>
+```
+
+```
+CAPSULE_FQDN=<capsule_full_hostname>
+```
+
 # Serve configuration
 
 ###### Generate register command to satellite server
@@ -11,7 +21,7 @@
 ###### Regster to satellite with kattelo agent
 
 ```
-curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://<SATELLITE_FQDN>/pub/katello-ca-consumer-latest.noarch.rpm
+curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
 ```
 
 ```
@@ -19,7 +29,7 @@ yum localinstall -y katello-ca-consumer-latest.noarch.rpm
 ```
 
 ```
-subscription-manager config --rhsm.baseurl=https://<SATELLITE_FQDN>/pulp/content --server.hostname=<SATELLITE_FQDN>
+subscription-manager config --rhsm.baseurl=https://${SATELLITE_FQDN}/pulp/content --server.hostname=${SATELLITE_FQDN}
 ```
 
 * *[!] Check the /etc/yum.repos.d/redhat.repo file and ensure that the appropriate repositories have been enabled.*
@@ -117,17 +127,11 @@ openssl x509 -req -days 365 -in ~/capsule_cert/capsule_cert_csr.pem -CA ~/satell
 katello-certs-check -t capsule -c ~/capsule_cert/capsule.crt -k ~/capsule_cert/capsule_cert_key.pem -b ~/satellite_cert/ca/ca.crt
 ```
 
-*Create environment variable with the capsule server fqdn*
-
-```
-export CAPSULE=<CAPSULE_FQDN>
-```
-
 * *Example:*
 
 ```
-capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
-        --certs-tar  "~/$CAPSULE-certs.tar" \
+capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
+        --certs-tar  "~/${CAPSULE_FQDN}-certs.tar" \
         --server-cert "/root/capsule_cert/capsule.crt" \
         --server-key "/root/capsule_cert/capsule_cert_key.pem" \
         --server-ca-cert "/root/satellite_cert/ca/ca.crt"
@@ -142,8 +146,8 @@ capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
 
  	 If you do not have the Capsule registered to the Satellite instance, then please do the following:
 
- 	 1. yum -y localinstall http://satellite01.redhat.local/pub/katello-ca-consumer-latest.noarch.rpm
- 	 2. subscription-manager register --org "Matrix"
+ 	 1. yum -y localinstall http://satellite.example.com/pub/katello-ca-consumer-latest.noarch.rpm
+ 	 2. subscription-manager register --org "My Organization"
 
   	Once this is completed run the steps below to start the Capsule installation:
 
@@ -156,24 +160,24 @@ capsule-certs-generate --foreman-proxy-fqdn "$CAPSULE" \
 
   	 satellite-installer \
                     --scenario capsule \
-                    --certs-tar-file                              "/root/capsule01.redhat.local-certs.tar"\
+                    --certs-tar-file                              "~/path/to/capsule_cert"\
                     --foreman-proxy-register-in-foreman           "true"\
-                    --foreman-proxy-foreman-base-url              "https://satellite01.redhat.local"\
-                    --foreman-proxy-trusted-hosts                 "satellite01.redhat.local"\
-                    --foreman-proxy-trusted-hosts                 "capsule01.redhat.local"\
-                    --foreman-proxy-oauth-consumer-key            "eEdQtvXmNKgEVL8vvfDTyMAFH2BFiDtA"\
-                    --foreman-proxy-oauth-consumer-secret         "htVdXYthUoKvTRScJ92xdUXdTRvnx7rp"
+                    --foreman-proxy-foreman-base-url              "https://satellite.example.com"\
+                    --foreman-proxy-trusted-hosts                 "satellite.example.com"\
+                    --foreman-proxy-trusted-hosts                 "capsule.example.com"\
+                    --foreman-proxy-oauth-consumer-key            "xxxxxxxxxxxxxxxxxxxxxxxx"\
+                    --foreman-proxy-oauth-consumer-secret         "xxxxxxxxxxxxxxxxxxxxxxxx"
 	 ```
 	 
 *Copy the .tar file to your capsule server*
 
 ```
-scp ~/<capsule_fqdn>-certs.tar root@<capsule_fqdn>:~/<capsule_fqdn>-certs.tar
+scp ~/${CAPSULE_FQDN}-certs.tar root@${CAPSULE_FQDN}:~/${CAPSULE_FQDN}-certs.tar
 ```
 
 # Steps on capsule server
 
-#### Run the installation command
+#### Copy and run the installation command
 
 *After installation complete you need to sync your content to the capsule server, here you can find the sync logs*
 
