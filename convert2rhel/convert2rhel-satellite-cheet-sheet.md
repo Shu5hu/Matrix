@@ -1,4 +1,22 @@
-#
+# Variables
+
+```
+export MAJOR_VERSION=<os_major_version>
+```
+
+```
+export SATELLITE_FQDN=<satellite_full_hostname>
+```
+
+```
+export ACTIVATION_KEY=<activation_key>
+```
+
+```
+export ORGANIZATION_ID=<organization_name>
+```
+
+# 
 
 ```
 yum update
@@ -33,7 +51,7 @@ curl --create-dirs -o /etc/rhsm/ca/redhat-uep.pem https://ftp.redhat.com/redhat/
 *DEBUG: `cat /etc/rhsm/ca/redhat-uep.pem`*
 
 ```
-curl -o /etc/yum.repos.d/convert2rhel.repo https://ftp.redhat.com/redhat/convert2rhel/<MAJOR_VERSION>/convert2rhel.repo
+curl -o /etc/yum.repos.d/convert2rhel.repo https://ftp.redhat.com/redhat/convert2rhel/${MAJOR_VERSION}/convert2rhel.repo
 ```
 
 *DEBUG: `cat /etc/yum.repos.d/convert2rhel.repo`*
@@ -54,7 +72,7 @@ yum -y install convert2rhel
 ```
 
 ```
-curl --insecure --output /usr/share/convert2rhel/subscription-manager/katello-ca-consumer-latest.noarch.rpm https://<SATELLITE_SERVER>/pub/katello-ca-consumer-latest.noarch.rpm
+curl --insecure --output /usr/share/convert2rhel/subscription-manager/katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
 ```
 
 *DEBUG: `ls /usr/share/convert2rhel/subscription-manager/`*
@@ -69,7 +87,7 @@ vi activiation_key.ini
 
 > ```
 > [subscription_manager]
-> activation_key = <ACTIVATION_KEY>
+> activation_key = ${ACTIVATION_KEY}
 
 ```
 chmod 0600 activiation_key.ini
@@ -78,5 +96,5 @@ chmod 0600 activiation_key.ini
 #
 
 ```
-convert2rhel --org <ORGANIZATION_ID> --config-file activiation_key.ini
+convert2rhel --org ${ORGANIZATION_ID} --config-file activiation_key.ini
 ```
