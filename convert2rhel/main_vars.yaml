@@ -8,6 +8,6 @@ ACTIVATION_KEY: "<activation key to the os content>"
 
 # IN CASE YOU USE REDHAT CDN
 
-USERNAME: "<redhat username>"
-PASSWORD: "<redhat password>"
+REDHAT_USERNAME: "<redhat username>"
+REDHAT_PASSWORD: "<redhat password>"
 POOL_ID: "<pool id of the content you want to consumed>"
