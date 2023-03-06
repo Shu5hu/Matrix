@@ -16,7 +16,7 @@ export ACTIVATION_KEY=<activation_key>
 export ORGANIZATION_ID=<organization_name>
 ```
 
-# 
+# Convertion proccess
 
 ```
 yum update
