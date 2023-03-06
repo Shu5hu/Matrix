@@ -1,13 +1,13 @@
-MAJOR_VERSION: <os major version>
+MAJOR_VERSION: "<os major version>"
 
 # IN CASE YOU USE SATELLITE SERVER
 
-SATELLITE_FQDN: <satellite server fqdn>
-ORGANIZATION_ID: <organization name from satellite server>
+SATELLITE_FQDN: "<satellite server fqdn>"
+ORGANIZATION_ID: "<organization name from satellite server>"
 ACTIVATION_KEY: "<activation key to the os content>"
 
 # IN CASE YOU USE REDHAT CDN
 
 USERNAME: "<redhat username>"
-PASSWORD: <redhat password>
-POOL_ID: <pool id of the content you want to consumed>
+PASSWORD: "<redhat password>"
+POOL_ID: "<pool id of the content you want to consumed>"
