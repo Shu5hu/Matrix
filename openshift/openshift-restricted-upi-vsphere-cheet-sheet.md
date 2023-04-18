@@ -107,7 +107,7 @@ https://console.redhat.com/openshift/downloads#tool-mirror-registry
 *extract the files from the tar file to your location*
 
 ```
-tar -xvzf tar/mirror-registry.tar.gz -C .
+tar -xvzf /path/to/mirror-registry.tar.gz -C .
 ```
 
 > execution-environment.tar </br>
