@@ -8,5 +8,3 @@
   loop: "{{ command_output.results }}"
   loop_control:
     label: "{{ item.stdout }}"
-
-    this is a test
