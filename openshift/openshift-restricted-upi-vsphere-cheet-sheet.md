@@ -235,7 +235,7 @@ mkdir /quay
 *extract the binary files*
 
 ```
-tar -xvzf oc-<version>-linux.tar.gz .
+tar -xvzf oc-<version>-linux.tar.gz
 ```
 
 *install oc client*
