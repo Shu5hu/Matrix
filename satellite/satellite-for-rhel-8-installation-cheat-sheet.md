@@ -17,6 +17,14 @@ ADMIN_PASSWORD=<satellite_admin_password>
 ```
 
 ```
+SATELLITE_FQDN=<satellite_hostname.your.domain>
+```
+
+```
+SATELLITE_VERSION=<6.XX>
+```
+
+```
 MANIFEST_FILE=</path/to/manifest_file.zip>
 ```
 
@@ -28,9 +36,7 @@ PROXY_NAME=<name_for_proxy_connection>
 PROXY_URL=<http://myproxy.example.com:port>
 ```
 
-```
-SATELLITE_FQDN=<satellite_hostname.your.domain>
-```
+
 
 
 # Prerequisites 
@@ -60,7 +66,7 @@ subscription-manager repos --disable "*"
 ```
 
 ```
-subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-<VERSION>-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-<VERSION>-for-rhel-8-x86_64-rpms
+subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-${SATELLITE_VERSION}-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-${SATELLITE_VERSION}-for-rhel-8-x86_64-rpms
 ```
 
 ```
@@ -76,11 +82,7 @@ yum update -y
 ```
 
 ```
-yum install satellite -y 
-```
-
-```
-yum install chrony sos createrepo_c tmux -y
+yum install satellite chrony sos createrepo_c tmux -y 
 ```
 
 ```
