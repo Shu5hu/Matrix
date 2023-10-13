@@ -129,6 +129,42 @@ hammer http-proxy create --name=${PROXY_NAME} --url=${PROXY_URL}
 hammer settings set --name=content_default_http_proxy --value=${PROXY_NAME}
 ```
 
+&nbsp;
+
+# Export/Import Library Content
+
+*Export all library content*
+
+```
+hammer content-export complete library --organization="${ORGANIZATION_ID}"
+```
+
+* *After the export complete create tar.gz file from the export directory in the /var/lib/pulp/exports/ directory to move it to the disconnected satellite server*
+
+*Import all library content*
+
+* *Unarchive the content in the /var/lib/pulp/imports/ directory*
+  
+*Change the owner of the unarcive content to pulp if its not the case*
+
+```
+chown -R pulp:pulp /var/lib/pulp/imports/<example:2021-03-02T03-35-24-00-00>
+```
+
+*Verify that the ownership is set correctly*
+
+```
+ls -lh /var/lib/pulp/imports/<example:2021-03-02T03-35-24-00-00>
+```
+
+*Import the content*
+
+```
+hammer content-import library --organization="${ORGANIZATION_ID}" --path=/var/lib/pulp/imports/<example:2021-03-02T03-35-24-00-00>
+```
+
+&nbsp;
+
 # Satellite maintain commands
 
 *Download kattelo CA*
@@ -173,4 +209,9 @@ foreman-maintain packages install <package name>
 satellite-maintain packages unlock
 ```
 
+*Cleanup tasks from the satellite task manu*
+
+```
+foreman-rake foreman_tasks:cleanup TASK_SEARCH='result == <result>' STATES='<state>' VERBOSE=true
+```
 
