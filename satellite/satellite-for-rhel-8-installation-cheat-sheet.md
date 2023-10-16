@@ -157,6 +157,10 @@ chown -R pulp:pulp /var/lib/pulp/imports/<example:2021-03-02T03-35-24-00-00>
 ls -lh /var/lib/pulp/imports/<example:2021-03-02T03-35-24-00-00>
 ```
 
+* *Update the CDN configuration settings to Export Sync*
+
+    Satellite WebUI --> Content --> Subscriptions --> Manage Manifest --> CDN Configuration --> Select Export Sync -->  Update
+
 *Import the content*
 
 ```
