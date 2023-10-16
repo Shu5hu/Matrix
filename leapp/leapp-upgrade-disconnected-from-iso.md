@@ -9,13 +9,13 @@
 *register to your redhat account*
 
 ```
-subscription manager register
+subscription-manager register
 ```
 
 *attach auto subscription to the machine*
 
 ```
-subscription manager attach --auto
+subscription-manager attach --auto
 ```
 
 *enable the rhel-7-server-extras-rpms repository*
