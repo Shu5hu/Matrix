@@ -36,7 +36,7 @@ mkdir /leapp
 yum install leapp-upgrade --downloadonly --downloaddir /leapp
 ```
 
-* *if you get an error from the last command about the leapp rpms dpwnload them and copy them to their dependencies*
+* *if you get an error from the last command about the leapp rpms download them and copy them to their dependencies*
 
 *download the leapp rpms from here*
 
