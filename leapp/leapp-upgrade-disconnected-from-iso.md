@@ -21,7 +21,7 @@ subscription-manager attach --auto
 *enable the rhel-7-server-extras-rpms repository*
 
 ```
-subscription-manager repos enable=rhel-7-server-extras-rpms
+subscription-manager repos --enable=rhel-7-server-extras-rpms
 ```
 
 *create directory for the leapp rpms*
