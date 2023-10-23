@@ -92,6 +92,10 @@ systemctl enable --now chronyd
 ###### In case you use tmux
 
 ```
+yum install tmux -y
+```
+
+```
 tmux
 ```
 
