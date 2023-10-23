@@ -82,7 +82,7 @@ yum update -y
 ```
 
 ```
-yum install satellite chrony sos createrepo_c tmux -y 
+yum install satellite chrony sos createrepo_c -y 
 ```
 
 ```
