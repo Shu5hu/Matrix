@@ -8,9 +8,13 @@ SATELLITE_FQDN=<satellite_full_hostname>
 CAPSULE_FQDN=<capsule_full_hostname>
 ```
 
-# Serve configuration
+```
+SATELLITE_VERSION=<6.XX>
+```
 
-###### Generate register command to satellite server
+# Serve Configuration
+
+### Generate register command to satellite server
 
 	in the Satellite web UI, navigate to Hosts > Register Host.
 	Click Generate to create the registration command.
@@ -18,7 +22,7 @@ CAPSULE_FQDN=<capsule_full_hostname>
 	Log on to the host you want register and run the previously generated command.
 	Update subscription manager configuration for rhsm.baseurl and server.hostname:
 
-###### Regster to satellite with kattelo agent
+### Regster to satellite with kattelo agent
 
 ```
 curl --insecure --output katello-ca-consumer-latest.noarch.rpm https://${SATELLITE_FQDN}/pub/katello-ca-consumer-latest.noarch.rpm
@@ -39,7 +43,7 @@ subscription-manager repos --disable "*"
 ```
 
 ```
-subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-capsule-6.11-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-6.11-for-rhel-8-x86_64-rpms
+subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=satellite-capsule-${SATELLITE_VERSION}-for-rhel-8-x86_64-rpms --enable=satellite-maintenance-${SATELLITE_VERSION}-for-rhel-8-x86_64-rpms
 ```
 
 ```
@@ -58,9 +62,47 @@ yum install satellite-capsule chrony -y
 systemctl enable --now chronyd
 ```
 
-# Steps on satellite server
+# Steps On Satellite Server
 
-###### Create capsule server certificate
+- [Configuring Capsule Server with a Default SSL Certificate](#Configuring-Capsule-Server-with-a-Default-SSL-Certificate)
+- [Configuring Capsule Server with a Custom SSL Certificate](#Configuring-Capsule-Server-with-a-Custom-SSL-Certificate)
+
+### Configuring Capsule Server with a Default SSL Certificate
+
+*Create directory for the certificates*
+
+```
+mkdir /root/capsule_cert
+```
+
+*Generate the certificate archive for the Capsule Server*
+
+```
+capsule-certs-generate \
+--foreman-proxy-fqdn ${CAPSULE_FQDN} \
+--certs-tar /root/capsule_cert/${CAPSULE_FQDN}-certs.tar
+```
+
+* *Example output of capsule-certs-generate*
+
+	output omitted
+	satellite-installer --scenario capsule \
+	--certs-tar-file "/root/capsule_cert/${CAPSULE_FQDN}-certs.tar" \
+	--foreman-proxy-register-in-foreman "true" \
+	--foreman-proxy-foreman-base-url "https://${SATELLITE_FQDN}" \
+	--foreman-proxy-trusted-hosts "${SATELLITE_FQDN}" \
+	--foreman-proxy-trusted-hosts "${CAPSULE_FQDN}" \
+	--foreman-proxy-oauth-consumer-key "xxxxxxxxxxxxxxxxxxxxxx" \
+	--foreman-proxy-oauth-consumer-secret "xxxxxxxxxxxxxxxxxxxxxxx"
+
+*Copy the certificate archive file to your Capsule Server*
+
+```
+scp /root/capsule_cert/${CAPSULE_FQDN}-certs.tar \
+root@${CAPSULE_FQDN}:/root/${CAPSULE_FQDN}-certs.tar
+```
+
+### Configuring Capsule Server with a Custom SSL Certificate
 
 *Create directory for the certificates*
 
@@ -127,7 +169,7 @@ openssl x509 -req -days 365 -in ~/capsule_cert/capsule_cert_csr.pem -CA ~/satell
 katello-certs-check -t capsule -c ~/capsule_cert/capsule.crt -k ~/capsule_cert/capsule_cert_key.pem -b ~/satellite_cert/ca/ca.crt
 ```
 
-* *Example:*
+* *Example output of katello-certs-check*
 
 ```
 capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
@@ -139,7 +181,7 @@ capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
 			
 * *This command will generate capsule server install procedure, [!] follow this procedure to start installation*
 								 
-* *Example:*
+* *Example output of capsule-certs-generate*
         
 	```
   	To finish the installation, follow these steps:
@@ -169,15 +211,15 @@ capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
                     --foreman-proxy-oauth-consumer-secret         "xxxxxxxxxxxxxxxxxxxxxxxx"
 	 ```
 	 
-*Copy the .tar file to your capsule server*
+*Copy the certificate archive file to your Capsule Server*
 
 ```
 scp ~/${CAPSULE_FQDN}-certs.tar root@${CAPSULE_FQDN}:~/${CAPSULE_FQDN}-certs.tar
 ```
 
-# Steps on capsule server
+# Steps On Capsule Server
 
-#### Copy and run the installation command
+### Copy And Run The Installation Command
 
 *After installation complete you need to sync your content to the capsule server, here you can find the sync logs*
 
