@@ -85,7 +85,7 @@ capsule-certs-generate \
 
 * *Example output of capsule-certs-generate*
 
-	output omitted
+	```
 	satellite-installer --scenario capsule \
 	--certs-tar-file "/root/capsule_cert/${CAPSULE_FQDN}-certs.tar" \
 	--foreman-proxy-register-in-foreman "true" \
@@ -94,6 +94,7 @@ capsule-certs-generate \
 	--foreman-proxy-trusted-hosts "${CAPSULE_FQDN}" \
 	--foreman-proxy-oauth-consumer-key "xxxxxxxxxxxxxxxxxxxxxx" \
 	--foreman-proxy-oauth-consumer-secret "xxxxxxxxxxxxxxxxxxxxxxx"
+    ```
 
 *Copy the certificate archive file to your Capsule Server*
 
