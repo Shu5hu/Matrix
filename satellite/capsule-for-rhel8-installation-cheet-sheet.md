@@ -67,7 +67,14 @@ systemctl enable --now chronyd
 - [Configuring Capsule Server with a Default SSL Certificate](#Configuring-Capsule-Server-with-a-Default-SSL-Certificate)
 - [Configuring Capsule Server with a Custom SSL Certificate](#Configuring-Capsule-Server-with-a-Custom-SSL-Certificate)
 
+
 ### Configuring Capsule Server with a Default SSL Certificate
+
+# Variables
+
+```
+CAPSULE=<capsule_full_hostname>
+```
 
 *Create directory for the certificates*
 
@@ -79,31 +86,37 @@ mkdir /root/capsule_cert
 
 ```
 capsule-certs-generate \
---foreman-proxy-fqdn ${CAPSULE_FQDN} \
---certs-tar /root/capsule_cert/${CAPSULE_FQDN}-certs.tar
+--foreman-proxy-fqdn ${CAPSULE} \
+--certs-tar /root/capsule_cert/${CAPSULE}-certs.tar
 ```
 
 * *Example output of capsule-certs-generate*
 
 	```
 	satellite-installer --scenario capsule \
-	--certs-tar-file "/root/capsule_cert/${CAPSULE_FQDN}-certs.tar" \
+	--certs-tar-file "/root/capsule_cert/capsule.example.com-certs.tar" \
 	--foreman-proxy-register-in-foreman "true" \
-	--foreman-proxy-foreman-base-url "https://${SATELLITE_FQDN}" \
-	--foreman-proxy-trusted-hosts "${SATELLITE_FQDN}" \
-	--foreman-proxy-trusted-hosts "${CAPSULE_FQDN}" \
+	--foreman-proxy-foreman-base-url "https://satellite.example.com" \
+	--foreman-proxy-trusted-hosts "satellite.example.com" \
+	--foreman-proxy-trusted-hosts "capsule.example.com" \
 	--foreman-proxy-oauth-consumer-key "xxxxxxxxxxxxxxxxxxxxxx" \
 	--foreman-proxy-oauth-consumer-secret "xxxxxxxxxxxxxxxxxxxxxxx"
-    ```
+	```
 
 *Copy the certificate archive file to your Capsule Server*
 
 ```
-scp /root/capsule_cert/${CAPSULE_FQDN}-certs.tar \
-root@${CAPSULE_FQDN}:/root/${CAPSULE_FQDN}-certs.tar
+scp /root/capsule_cert/${CAPSULE}-certs.tar \
+root@${CAPSULE}:/root/${CAPSULE}-certs.tar
 ```
 
 ### Configuring Capsule Server with a Custom SSL Certificate
+
+# Variables
+
+```
+CAPSULE=<capsule_full_hostname>
+```
 
 *Create directory for the certificates*
 
@@ -173,8 +186,8 @@ katello-certs-check -t capsule -c ~/capsule_cert/capsule.crt -k ~/capsule_cert/c
 * *Example output of katello-certs-check*
 
 ```
-capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
-        --certs-tar  "~/${CAPSULE_FQDN}-certs.tar" \
+capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE}" \
+        --certs-tar  "~/${CAPSULE}-certs.tar" \
         --server-cert "/root/capsule_cert/capsule.crt" \
         --server-key "/root/capsule_cert/capsule_cert_key.pem" \
         --server-ca-cert "/root/satellite_cert/ca/ca.crt"
@@ -215,7 +228,7 @@ capsule-certs-generate --foreman-proxy-fqdn "${CAPSULE_FQDN}" \
 *Copy the certificate archive file to your Capsule Server*
 
 ```
-scp ~/${CAPSULE_FQDN}-certs.tar root@${CAPSULE_FQDN}:~/${CAPSULE_FQDN}-certs.tar
+scp ~/${CAPSULE}-certs.tar root@${CAPSULE}:~/${CAPSULE}-certs.tar
 ```
 
 # Steps On Capsule Server
