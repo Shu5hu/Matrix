@@ -189,7 +189,7 @@ leapp upgrade --iso /path/to/iso --target 8.8 --no-rhsm
 *create environment variable with the old kernel version*
 
 ```
-export old_kernel=`ls -d /lib/moduels/*.el7* |awk -F '/' '{print $NF}'`
+export old_kernel=`ls -d /lib/modules/*.el7* |awk -F '/' '{print $NF}'`
 ```
 
 *check the stdout of the variable*
