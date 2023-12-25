@@ -22,4 +22,4 @@ You must enable AWS Security Token Service (AWS STS) in any Region where you pla
 
 #### Create the service role
 
-1. Create a file named <mark style="background-color: #DDDDDD">trust-policy.json</mark> on your computer. Add the following policy to the file:
+1. Create a file named ==trust-policy.json== on your computer. Add the following policy to the file:
