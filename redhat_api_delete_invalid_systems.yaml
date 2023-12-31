@@ -1,0 +1,80 @@
+- name: delete invalid systems from redhat using redhat api
+  hosts: localhost
+  gather_facts: false
+  tasks:
+
+# To run this playbook you must defined the OFFLINE_TOKEN variable, use "ansible-playbook -e OFFLINE_TOKEN=<your token>"
+# The token you can get from https://access.redhat.com/management/api 
+# You can use this url - https://access.redhat.com/articles/3626371 , to follow the process manually 
+
+  - name: Check connection to redhat api
+    uri:
+      url: "{{ item }}"
+      method: GET
+      follow_redirects: none
+    register: result
+    until: result.status == 200
+    retries: 1
+    delay: 1
+    loop:
+    - "https://api.access.redhat.com"
+    # you can add here urls to check connectivity if you need, just make new line start with - "url"
+
+  - name: Use offline token to get the access token
+    uri:
+      url: "https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"
+      method: POST
+      validate_certs: false
+      body_format: form-urlencoded
+      body:
+        grant_type: refresh_token
+        client_id: rhsm-api
+        refresh_token: "{{ OFFLINE_TOKEN }}"
+    register: results
+
+  - name: Create variable from the access token
+    set_fact:
+      ACCESS_TOKEN: "{{ results['json']['access_token'] }}"
+
+  - name: Get systems list from redhat api
+    uri:
+      url: "https://api.access.redhat.com/management/v1/systems"
+      method: GET
+      validate_certs: false
+      headers:
+        Authorization: "{{ ACCESS_TOKEN }}"
+    register: system_list
+
+  - name: Create new list with invalid status only
+    set_fact:
+      INVALID_SYS_LIST: "{{ system_list['json']['body'] | selectattr('entitlementStatus', 'match', 'invalid') | list }}"
+
+  - name: Create new list contain only the uuid's of the invalid systems
+    set_fact:
+      UUID_LIST: "{{ UUID_LIST | default([]) + [item.href] }}"
+    with_items:
+    - "{{ INVALID_SYS_LIST }}"
+
+  - debug:
+      var: UUID_LIST
+
+  - block:
+    - name: Print message before the play end
+      debug:
+              msg: "You currently dont have systems with invalid status :)"
+
+    - name: End the play if the list is undefined
+      meta: end_play
+    when: UUID_LIST is undefined
+
+  - name: Delete the systems from the invalid list using uuid
+    uri:
+      url: "{{ item }}"
+      method: DELETE
+      validate_certs: false
+      status_code: [200,204]
+      headers:
+        Authorization: "{{ ACCESS_TOKEN }}"
+    register: delete_result
+    with_items:
+    - "{{ UUID_LIST }}"
