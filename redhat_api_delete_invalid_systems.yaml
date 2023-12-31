@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
 
-# To run this playbook you must defined the OFFLINE_TOKEN variable, use "ansible-playbook -e OFFLINE_TOKEN=<your token>"
+# To run this playbook you must defined the OFFLINE_TOKEN variable, use "ansible-playbook <playbook name> -e OFFLINE_TOKEN=<your token>"
 # The token you can get from https://access.redhat.com/management/api 
 # You can use this url - https://access.redhat.com/articles/3626371 , to follow the process manually 
 
