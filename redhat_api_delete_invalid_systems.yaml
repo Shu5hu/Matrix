@@ -61,7 +61,7 @@
   - block:
     - name: Print message before the play end
       debug:
-              msg: "You currently dont have systems with invalid status :)"
+        msg: "You currently dont have systems with invalid status :)"
 
     - name: End the play if the list is undefined
       meta: end_play
