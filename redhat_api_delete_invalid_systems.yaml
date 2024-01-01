@@ -55,8 +55,8 @@
     with_items:
     - "{{ INVALID_SYS_LIST }}"
 
-  - debug:
-      var: UUID_LIST
+  # - debug:
+  #     var: UUID_LIST
 
   - block:
     - name: Print message before the play end
