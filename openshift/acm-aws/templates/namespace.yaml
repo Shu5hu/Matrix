@@ -1,0 +1,10 @@
+{{- range $count := until (int $.Values.clusterReplicas) }}
+{{- $ocpVersion := $.Values.ocpVersion | replace "." "" }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+spec: {}
+{{- end }}
+

@@ -1,0 +1,22 @@
+{{- range $count := until (int $.Values.clusterReplicas) }}
+{{- $ocpVersion := $.Values.ocpVersion | replace "." "" }}
+---
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}-worker
+  namespace: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+spec:
+  name: worker
+  clusterDeploymentRef:
+    name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 100
+        type: io1
+      type: m5.xlarge
+  replicas: {{ $.Values.cluster.worker.replicas | default "0" }}
+{{- end }}
+

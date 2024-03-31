@@ -1,0 +1,14 @@
+region: ""
+awsCredentials:
+  accessKey: ""
+  secretAccessKey: ""
+clusterReplicas: ""
+baseDomain: ""
+ocpVersion: ""
+cluster:
+  name: ocp
+  master:
+    replicas: 1
+  worker:
+    replicas: 0
+

@@ -1,0 +1,17 @@
+{{- range $count := until (int $.Values.clusterReplicas) }}
+{{- $ocpVersion := $.Values.ocpVersion | replace "." "" }}
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+  labels:
+    name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+    cloud: Amazon
+    region: {{ $.Values.region }}
+    vendor: OpenShift
+    cluster.open-cluster-management.io/clusterset: default
+spec:
+  hubAcceptsClient: true
+{{- end }}
+

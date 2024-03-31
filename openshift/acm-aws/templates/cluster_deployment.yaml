@@ -1,0 +1,36 @@
+{{- range $count := until (int $.Values.clusterReplicas) }}
+{{- $ocpVersion := $.Values.ocpVersion | replace "." "" }}
+---
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+  namespace: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+  labels:
+    cloud: AWS
+    region: {{ $.Values.region }}
+    vendor: OpenShift
+    cluster.open-cluster-management.io/clusterset: default
+spec:
+  baseDomain: {{ $.Values.baseDomain }}
+  clusterName: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}
+  controlPlaneConfig:
+    servingCertificates: {}
+  installAttemptsLimit: 1
+  installed: false
+  platform:
+    aws:
+      credentialsSecretRef:
+        name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}-aws-creds
+      region: {{ $.Values.region }}
+  provisioning:
+    installConfigSecretRef:
+      name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}-install-config
+    sshPrivateKeySecretRef:
+      name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}-ssh-private-key
+    imageSetRef:
+      name: img{{ $.Values.ocpVersion }}-multi-appsub
+  pullSecretRef:
+    name: {{ $.Values.cluster.name }}-{{ $ocpVersion }}-{{ $count }}-pull-secret
+{{- end }}
+
