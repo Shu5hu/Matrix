@@ -25,8 +25,7 @@ These steps should be performed on a bastion machine, which will provide the nec
 * [Generating a key pair for cluster node SSH access](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#ssh-agent-using_ipi-vsphere-preparing-to-install)
 * [Adding vCenter root CA certificates to your system trust](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#installation-adding-vcenter-root-certificates_ipi-vsphere-preparing-to-install)
 
-If you don't have a registry to host the installation images, follow the steps to install Minimal Quay on your bastion machine and use it as a registry for your installation. In a restricted network environment, you must create one Quay registry in an environment with an internet connection to pull the images and another inside your restricted network (which could be your bastion server).
-
+If you don't have a registry to host the installation images, follow the steps to install Minimal Quay on your bastion machine and use it as a registry for your installation. In a restricted network environment, you must pull first the images to the connected machine, than bring them over to your restricted network and push them to your local registry
 * [Red Hat minimal Quay registry](https://github.com/shu5hu/matrix/blob/main/openshift/openshift-restricted-upi-vsphere-cheet-sheet.md#Red-Hat-minimal-Quay-registry)
     * *If you wnat to use server certificate that signed by your organization CA, please create this certificate before you start this proccess, this certificat must contain alt name*
 * [Configuring credentials that allow images to be mirrored](https://docs.openshift.com/container-platform/4.15/installing/disconnected_install/installing-mirroring-installation-images.html#installation-adding-registry-pull-secret_installing-mirroring-installation-images)
