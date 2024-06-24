@@ -20,6 +20,8 @@ This guide provides all the necessary information to install RedHat OpenShift IP
 
 These steps should be performed on a bastion machine, which will provide the necessary infrastructure for the OpenShift installation.
 
+* [Creating the RHCOS image for restricted network installations](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/installing-restricted-networks-installer-provisioned-vsphere.html#installation-creating-image-restricted_installing-restricted-networks-installer-provisioned-vsphere)
+  * *The latest RHCOS ISO is available [here](https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.15/latest/)*
 * [Validating DNS resolution for user-provisioned infrastructure](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-user-provisioned-validating-dns_installing-platform-agnostic)
 * [Installing the OpenShift CLI by downloading the binary](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#cli-installing-cli_ipi-vsphere-preparing-to-install)
 * [Generating a key pair for cluster node SSH access](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#ssh-agent-using_ipi-vsphere-preparing-to-install)
