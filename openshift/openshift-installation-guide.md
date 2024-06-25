@@ -12,7 +12,7 @@ This guide provides all the necessary information to install RedHat OpenShift IP
 * [Minimum resource requirements for cluster installation](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-minimum-resource-requirements_installing-platform-agnostic)
 * [Networking requirements for user-provisioned infrastructure](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-network-user-infra_installing-platform-agnostic)
 * [User-provisioned DNS requirements](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-dns-user-infra_installing-platform-agnostic)
-    * *When you use IPI you need only DNS name resolution for <mark>The Kubernetes API</mark> and <mark>The OpenShift Container Platform application wildcard</mark>*
+    * *When you use IPI installation method, you only need DNS name resolution for the <mark>Kubernetes API</mark> and the <mark>OpenShift Container Platform application wildcard</mark>*
 </details>
 
 <details>
