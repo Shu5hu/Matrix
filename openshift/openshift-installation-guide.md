@@ -23,7 +23,9 @@ These steps should be performed on a bastion machine, which will provide the nec
 * [Creating the RHCOS image for restricted network installations](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/installing-restricted-networks-installer-provisioned-vsphere.html#installation-creating-image-restricted_installing-restricted-networks-installer-provisioned-vsphere)
   * *The latest RHCOS ISO is available [here](https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.15/latest/)*
 * [Validating DNS resolution for user-provisioned infrastructure](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-user-provisioned-validating-dns_installing-platform-agnostic)
+* [Obtaining the installation program](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#installation-obtaining-installer_ipi-vsphere-preparing-to-install)
 * [Installing the OpenShift CLI by downloading the binary](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#cli-installing-cli_ipi-vsphere-preparing-to-install)
+  * *Optional* [Install Helm Binary](https://helm.sh/docs/intro/install/)
 * [Generating a key pair for cluster node SSH access](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#ssh-agent-using_ipi-vsphere-preparing-to-install)
 * [Adding vCenter root CA certificates to your system trust](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-preparing-to-install.html#installation-adding-vcenter-root-certificates_ipi-vsphere-preparing-to-install)
 
