@@ -6,8 +6,9 @@ This guide provides all the necessary information to install RedHat OpenShift IP
   <summary>Architecture and information about Openshift installtion</summary>
 
 * [Installation process details](https://docs.openshift.com/container-platform/4.15/architecture/architecture-installation.html#installation-process_architecture-installation)
-* [VMware vSphere infrastructure requirements](https://docs.openshift.com/container-platform/4.8/installing/installing_vsphere/installing-vsphere-installer-provisioned.html#installation-vsphere-infrastructure_installing-vsphere-installer-provisioned)
-* [vCenter requirements](https://docs.openshift.com/container-platform/4.8/installing/installing_vsphere/installing-vsphere-installer-provisioned.html#installation-vsphere-installer-infra-requirements_installing-vsphere-installer-provisioned)
+* [VMware vSphere infrastructure requirements](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-installation-reqs.html#installation-vsphere-infrastructure_ipi-vsphere-installation-reqs)
+* [VMware vSphere CSI Driver Operator requirements](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-installation-reqs.html#vsphere-csi-driver-reqs_ipi-vsphere-installation-reqs)
+* [vCenter requirements](https://docs.openshift.com/container-platform/4.15/installing/installing_vsphere/ipi/ipi-vsphere-installation-reqs.html#installation-vsphere-installer-infra-requirements_ipi-vsphere-installation-reqs)
 * [Requirements for a cluster with user-provisioned infrastructure](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-requirements-user-infra_installing-platform-agnostic)
 * [Minimum resource requirements for cluster installation](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-minimum-resource-requirements_installing-platform-agnostic)
 * [Networking requirements for user-provisioned infrastructure](https://docs.openshift.com/container-platform/4.15/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-network-user-infra_installing-platform-agnostic)
