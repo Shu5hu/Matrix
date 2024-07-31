@@ -1,0 +1,18 @@
+FROM registry.redhat.io/ansible-automation-platform-23/ee-minimal-rhel8
+USER root
+RUN microdnf install rpm-build jq ; \
+    python3 -m pip install requests-oauthlib ; \
+    python3 -m pip install kubernetes ; \
+    python3 -m pip install jmespath ; \
+    python3 -m pip install PyYAML ; \
+    python3 -m pip install awxkit ; \
+    python3 -m pip install rpm ; \
+    python3 -m pip install requests ; \
+    python3 -m pip install docker ; \
+    ansible-galaxy collection install community.okd --disable-gpg-verify ; \
+    ansible-galaxy collection install awx.awx ; \
+    ansible-galaxy collection install community.general ; \
+    ansible-galaxy collection install ansible.posix ; \
+    ansible-galaxy collection install theforeman.foreman ; \
+    ansible-galaxy collection install ansible.utils ; \
+    ansible-galaxy collection install ansible.netcommon
