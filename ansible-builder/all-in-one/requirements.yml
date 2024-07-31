@@ -1,0 +1,10 @@
+collections:
+  - name: awx.awx
+  - name: community.general
+  - name: ansible.posix
+  - name: theforeman.foreman
+  - name: community.vmware
+  - name: ansible.netcommon
+  - name: ansible.utils
+  - name: community.zabbix
+  - name: ibm.power_aix
